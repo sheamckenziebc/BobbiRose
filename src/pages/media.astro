@@ -1,0 +1,263 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+const base = import.meta.env.BASE_URL;
+
+const mediaItems = [
+  {
+    category: 'Feature',
+    categoryColor: 'rgba(196,145,58,0.2)',
+    categoryTextColor: 'var(--color-gold)',
+    categoryBorderColor: 'rgba(196,145,58,0.35)',
+    cardBg: 'linear-gradient(135deg, #2D4A3E 0%, #1E3D4F 100%)',
+    outlet: 'Manitobah',
+    headline: 'Celebrating World Water Day 2025: Manitobah × BRK',
+    description: "A feature on Bobbi Rose's connection to water, Gwich'in culture, and the collaboration marking World Water Day 2025.",
+    ctaLabel: 'Read Feature',
+    href: 'https://www.manitobah.ca/blogs/stories/celebrating-world-water-day-2025-manitobah-x-brk?utm_campaign=WWD&utm_medium=organic&utm_source=social',
+    external: true,
+    disabled: false,
+  },
+  {
+    category: 'Watch',
+    categoryColor: 'rgba(44,95,122,0.3)',
+    categoryTextColor: 'rgba(250,247,240,0.85)',
+    categoryBorderColor: 'rgba(44,95,122,0.45)',
+    cardBg: 'linear-gradient(135deg, #1E3D4F 0%, #0F2027 100%)',
+    outlet: 'National Geographic',
+    headline: '2024 NWT/Yukon Film Adventure',
+    description: 'A film journey through the northwest — watch the 2024 National Geographic and NWT/Yukon collaboration that Bobbi Rose was part of.',
+    ctaLabel: 'Watch Film — Link Coming Soon',
+    href: null,
+    external: false,
+    disabled: true,
+  },
+  {
+    category: 'Watch',
+    categoryColor: 'rgba(44,95,122,0.3)',
+    categoryTextColor: 'rgba(250,247,240,0.85)',
+    categoryBorderColor: 'rgba(44,95,122,0.45)',
+    cardBg: 'linear-gradient(135deg, #1a3240 0%, #2D4A3E 100%)',
+    outlet: 'Ancestral Rivers',
+    headline: 'IYRGT Wind River Trip — Summer 2022',
+    description: 'The Ancestral Rivers film documents the Indigenous Youth River Guide Training trip on the Wind River. A record of what happens when young people step onto the water with their guides and elders.',
+    ctaLabel: 'Watch Film — Link Coming Soon',
+    href: null,
+    external: false,
+    disabled: true,
+  },
+  {
+    category: 'Research',
+    categoryColor: 'rgba(139,99,71,0.2)',
+    categoryTextColor: 'rgba(250,247,240,0.8)',
+    categoryBorderColor: 'rgba(139,99,71,0.35)',
+    cardBg: 'linear-gradient(135deg, #4A3728 0%, #2D4A3E 100%)',
+    outlet: 'Frontiers in Sustainable Tourism',
+    headline: 'Indigenous Land-Based Guiding and Sustainable Tourism',
+    description: "An academic paper exploring the intersection of Indigenous guiding, cultural continuity, and sustainable tourism — citing Bobbi Rose's work in the Yukon and NWT.",
+    ctaLabel: 'Read Research',
+    href: 'https://www.frontiersin.org/journals/sustainable-tourism/articles/10.3389/frsut.2024.1414416/abstract',
+    external: true,
+    disabled: false,
+  },
+  {
+    category: 'Profile',
+    categoryColor: 'rgba(45,74,62,0.35)',
+    categoryTextColor: 'rgba(250,247,240,0.85)',
+    categoryBorderColor: 'rgba(45,74,62,0.5)',
+    cardBg: 'linear-gradient(135deg, #2D4A3E 0%, #4A3728 100%)',
+    outlet: 'Nahanni River Adventures',
+    headline: 'Guide Profile: Bobbi Rose Koe',
+    description: "Nahanni's profile of Bobbi Rose as a guide — her background, expertise, and approach to river travel.",
+    ctaLabel: 'Read Profile',
+    href: 'https://nahanni.com/guide/bobbi-rose-koe/',
+    external: true,
+    disabled: false,
+  },
+  {
+    category: 'Program',
+    categoryColor: 'rgba(196,145,58,0.15)',
+    categoryTextColor: 'rgba(250,247,240,0.85)',
+    categoryBorderColor: 'rgba(196,145,58,0.25)',
+    cardBg: 'linear-gradient(135deg, #1E3D4F 0%, #4A3728 100%)',
+    outlet: 'Arctic Inspiration Prize',
+    headline: 'Indigenous Youth River Guide Training',
+    description: 'Program documentation on the AIP-supported river guide training initiative that Bobbi Rose has been central to.',
+    ctaLabel: 'View Program',
+    href: 'https://arcticinspirationprize.ca/wp-content/uploads/2024/07/River-Guide-2021.pdf',
+    external: true,
+    disabled: false,
+  },
+];
+---
+
+<BaseLayout
+  title="Media — Bobbi Rose"
+  description="Interviews, film, research, and features — in print, on screen, in the world. Amplifying land-based Indigenous voices."
+>
+  <Header slot="header" />
+
+  <!-- HERO -->
+  <section
+    class="relative pt-36 pb-20 flex flex-col justify-end overflow-hidden"
+    style="background: linear-gradient(160deg, #0F2027 0%, #1a3240 40%, #1E3D4F 80%, #2D4A3E 100%); min-height: 50vh;"
+  >
+    <div class="absolute inset-0 pointer-events-none" style="opacity: 0.07;" aria-hidden="true">
+      <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <pattern id="media-waves" x="0" y="0" width="200" height="60" patternUnits="userSpaceOnUse">
+            <path d="M0 30 Q25 20 50 30 Q75 40 100 30 Q125 20 150 30 Q175 40 200 30" stroke="rgba(196,145,58,0.7)" stroke-width="0.8" fill="none"/>
+          </pattern>
+        </defs>
+        <rect width="100%" height="100%" fill="url(#media-waves)"/>
+      </svg>
+    </div>
+    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <nav class="mb-6" aria-label="Breadcrumb">
+        <ol class="flex items-center gap-2 text-xs" style="color: rgba(250,247,240,0.4);">
+          <li><a href={base} class="hover:opacity-80 transition-opacity">Home</a></li>
+          <li aria-hidden="true">/</li>
+          <li style="color: var(--color-gold);">Media</li>
+        </ol>
+      </nav>
+      <p class="text-xs font-semibold uppercase tracking-widest mb-4" style="color: var(--color-gold); letter-spacing: 0.2em;">Media</p>
+      <h1
+        class="text-4xl sm:text-5xl lg:text-6xl font-light text-white mb-4 leading-tight"
+        style="font-family: 'Cormorant Garamond', Georgia, serif;"
+      >
+        In Print, On Screen,<br/>In the World
+      </h1>
+      <p class="text-base font-light max-w-2xl" style="color: rgba(250,247,240,0.62);">
+        Interviews, film, research, and features that amplify land-based Indigenous voices.
+      </p>
+    </div>
+  </section>
+
+  <!-- MEDIA GRID -->
+  <section class="py-20 lg:py-28 animate-on-scroll" style="background-color: var(--color-cream);">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 stagger-children">
+        {mediaItems.map((item) => (
+          <article class="rounded-xl overflow-hidden animate-on-scroll card-hover flex flex-col" style="border: 1px solid var(--color-stone); background: white;">
+            <!-- Card header / gradient -->
+            <div class="h-36 flex items-end p-5 flex-shrink-0" style={`background: ${item.cardBg};`}>
+              <span
+                class="text-xs font-semibold uppercase tracking-widest px-2.5 py-1 rounded"
+                style={`background: ${item.categoryColor}; color: ${item.categoryTextColor}; letter-spacing: 0.1em; border: 1px solid ${item.categoryBorderColor};`}
+              >
+                {item.category}
+              </span>
+            </div>
+            <!-- Card body -->
+            <div class="p-6 flex flex-col flex-1">
+              <p class="text-xs font-medium uppercase tracking-wide mb-2" style="color: var(--color-earth);">{item.outlet}</p>
+              <h2
+                class="text-lg font-medium mb-3 leading-snug flex-1"
+                style="font-family: 'Cormorant Garamond', Georgia, serif; color: var(--color-dark);"
+              >
+                {item.headline}
+              </h2>
+              <p class="text-sm leading-relaxed mb-5" style="color: var(--color-mid);">
+                {item.description}
+              </p>
+              {item.disabled ? (
+                <span
+                  class="inline-flex items-center gap-1.5 text-sm font-medium cursor-not-allowed"
+                  style="color: rgba(74,55,40,0.35);"
+                  aria-disabled="true"
+                >
+                  {item.ctaLabel}
+                </span>
+              ) : (
+                <a
+                  href={item.href!}
+                  target={item.external ? '_blank' : undefined}
+                  rel={item.external ? 'noopener noreferrer' : undefined}
+                  class="inline-flex items-center gap-1.5 text-sm font-medium transition-opacity hover:opacity-70 self-start"
+                  style="color: var(--color-river);"
+                >
+                  {item.ctaLabel} {item.external ? '↗' : ''}
+                </a>
+              )}
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- PULL QUOTE -->
+  <section
+    class="py-24 lg:py-32 relative overflow-hidden animate-on-scroll"
+    style="background: linear-gradient(160deg, #1A1614 0%, #2D2218 50%, #1E3D4F 100%);"
+  >
+    <div class="absolute inset-0 pointer-events-none" style="opacity: 0.05;" aria-hidden="true">
+      <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <pattern id="media-quote-waves" x="0" y="0" width="300" height="80" patternUnits="userSpaceOnUse">
+            <path d="M0 40 Q75 20 150 40 Q225 60 300 40" stroke="#C4913A" stroke-width="1.2" fill="none"/>
+          </pattern>
+        </defs>
+        <rect width="100%" height="100%" fill="url(#media-quote-waves)"/>
+      </svg>
+    </div>
+    <div class="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <div class="flex items-center justify-center gap-4 mb-10" aria-hidden="true">
+        <div class="h-px w-16" style="background: var(--color-gold); opacity: 0.4;"></div>
+        <div class="w-1.5 h-1.5 rounded-full" style="background: var(--color-gold);"></div>
+        <div class="h-px w-16" style="background: var(--color-gold); opacity: 0.4;"></div>
+      </div>
+      <blockquote>
+        <p
+          class="text-2xl sm:text-3xl lg:text-4xl font-light italic text-white leading-snug mb-8"
+          style="font-family: 'Cormorant Garamond', Georgia, serif;"
+        >
+          &ldquo;The work of a guide is to hold space for people to arrive — at the river, at themselves, at something older than all of us.&rdquo;
+        </p>
+        <footer>
+          <cite class="text-sm font-medium not-italic" style="color: var(--color-gold); letter-spacing: 0.1em;">
+            &mdash; Bobbi Rose
+          </cite>
+        </footer>
+      </blockquote>
+      <div class="flex items-center justify-center gap-4 mt-10" aria-hidden="true">
+        <div class="h-px w-16" style="background: var(--color-gold); opacity: 0.4;"></div>
+        <div class="w-1.5 h-1.5 rounded-full" style="background: var(--color-gold);"></div>
+        <div class="h-px w-16" style="background: var(--color-gold); opacity: 0.4;"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SPOTIFY PLAYLIST -->
+  <section class="py-16 animate-on-scroll" style="background-color: var(--color-cream);">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-center">
+        <a
+          href="https://open.spotify.com/playlist/7qfOOHCg6tT8oiAsiV0nv6?si=Ih5uUUotRKmtFJi1vcGdZg"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center gap-4 rounded-xl px-6 py-5 transition-all card-hover"
+          style="background: white; border: 1px solid var(--color-stone); max-width: 400px; width: 100%;"
+        >
+          <div
+            class="w-12 h-12 rounded-lg flex items-center justify-center flex-shrink-0"
+            style="background: linear-gradient(135deg, #1db954, #1a8f42);"
+          >
+            <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/>
+            </svg>
+          </div>
+          <div>
+            <p class="text-xs font-semibold uppercase tracking-widest mb-1" style="color: var(--color-gold); letter-spacing: 0.1em;">Listen</p>
+            <p class="text-sm font-medium" style="color: var(--color-dark);">Bobbi Rose's Playlist</p>
+            <p class="text-xs" style="color: var(--color-mid);">Open in Spotify ↗</p>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <Footer slot="footer" />
+</BaseLayout>

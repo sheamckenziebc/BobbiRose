@@ -1,1 +1,0 @@
-const e=document.getElementById("mobile-menu-button"),t=document.getElementById("mobile-menu");e&&t&&e.addEventListener("click",()=>{const n="true"===e.getAttribute("aria-expanded");e.setAttribute("aria-expanded",String(!n)),t.classList.toggle("hidden")});

@@ -1,37 +1,37 @@
-# Summit Pro Builders - Configuration
-# General contractor serving the Denver metro area
+# Bobbi Rose Koe — Personal Brand & Professional Home
 
 site:
-  title: "Summit Pro Builders"
-  description: "Denver's trusted general contractor for kitchen remodels, bathroom renovations, home additions, and whole-home renovations. Licensed, insured, and committed to quality craftsmanship."
-  url: "https://sheamckenziebc.github.io/mastertemplate1"
-  author: "Summit Pro Builders"
+  title: "Bobbi Rose"
+  description: "Teetl'it Gwich'in river guide, artist, mentor, and land protector based in Whitehorse, Yukon. Owner of Dinjii Zhuh Adventures."
+  url: "https://sheamckenziebc.github.io/BobbiRose"
+  author: "Bobbi Rose Koe"
 
 branding:
   logo: "/assets/logo.svg"
-  primaryColor: "#1e3a5f"
-  secondaryColor: "#2563eb"
-  accentColor: "#f59e0b"
-  fontFamily: "Inter, system-ui, sans-serif"
+  primaryColor: "#1E3D4F"
+  secondaryColor: "#2D4A3E"
+  accentColor: "#C4913A"
+  fontFamily: "Cormorant Garamond, Georgia, serif"
 
 contact:
-  email: "info@summitprobuilders.com"
-  phone: "+1 (720) 555-0193"
-  address: "4821 Pearl St, Suite 200, Boulder, CO 80301"
-  businessHours: "Mon-Fri 7AM-6PM | Sat 8AM-2PM"
+  email: "hello@bobbirose.ca"
+  instagram: "https://instagram.com/river.beautyyy"
+  facebook: "https://www.facebook.com/broze14"
+  tiktok: "https://tiktok.com/@river.beautyyy"
+  spotify: "https://open.spotify.com/playlist/7qfOOHCg6tT8oiAsiV0nv6?si=Ih5uUUotRKmtFJi1vcGdZg"
 
 social:
-  facebook: "https://facebook.com/summitprobuilders"
+  facebook: "https://www.facebook.com/broze14"
   twitter: ""
-  instagram: "https://instagram.com/summitprobuilders"
-  linkedin: "https://linkedin.com/company/summitprobuilders"
+  instagram: "https://instagram.com/river.beautyyy"
+  linkedin: ""
   youtube: ""
 
 features:
-  blog: true
-  products: true
-  testimonials: true
-  faq: true
+  blog: false
+  products: false
+  testimonials: false
+  faq: false
   search: false
   comments: false
   analytics: false
@@ -40,10 +40,10 @@ integrations:
   formspree_id: "your-formspree-id"
   google_analytics: ""
   map_coordinates:
-    lat: 39.7392
-    lng: -104.9903
+    lat: 60.7212
+    lng: -135.0568
 
 seo:
-  keywords: ["general contractor Denver", "home remodeling Colorado", "kitchen remodel Boulder", "bathroom renovation Denver", "home additions", "licensed contractor", "Summit Pro Builders"]
+  keywords: ["Bobbi Rose Koe", "Teetl'it Gwich'in", "river guide", "Dinjii Zhuh Adventures", "Indigenous guide", "Yukon", "Whitehorse", "land-based experiences", "Indigenous tourism", "Gwich'in culture", "river guide Yukon"]
   og_image: "/assets/og-image.svg"
   twitter_card: "summary_large_image"

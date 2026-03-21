@@ -2,15 +2,13 @@ import { defineConfig } from 'astro/config';
 import tailwind from '@astrojs/tailwind';
 import sitemap from '@astrojs/sitemap';
 
-// https://astro.build/config
 export default defineConfig({
   site: 'https://sheamckenziebc.github.io',
-  base: '/mastertemplate1',
+  base: '/BobbiRose',
   trailingSlash: 'always',
   integrations: [
     tailwind({
-      // Minimize CSS bundle size
-      config: { 
+      config: {
         content: ['./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}'],
         safelist: []
       }
@@ -24,7 +22,6 @@ export default defineConfig({
     },
   },
   build: {
-    // Optimize for GitHub Pages
     assets: 'assets',
     inlineStylesheets: 'auto'
   },
@@ -34,4 +31,4 @@ export default defineConfig({
       minify: 'terser'
     }
   }
-}); 
+});

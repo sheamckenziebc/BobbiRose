@@ -6,360 +6,334 @@ import { readFileSync } from 'fs';
 import { join } from 'path';
 import yaml from 'js-yaml';
 
-// Load configuration
 const configPath = join(process.cwd(), 'config.yaml');
 const config = yaml.load(readFileSync(configPath, 'utf8'));
 
 const base = import.meta.env.BASE_URL;
 
-// Pre-compute JSON-LD for contact page
-const cContactPt: Record<string, any> = { telephone: config.contact.phone, contactType: "Customer Service", email: config.contact.email, availableLanguage: "English" };
-cContactPt["@type"] = "ContactPoint";
-const cAddr: Record<string, any> = { streetAddress: config.contact.address };
-cAddr["@type"] = "PostalAddress";
-const cMainEntity: Record<string, any> = { name: config.site.title, contactPoint: cContactPt, address: cAddr };
-cMainEntity["@type"] = "Organization";
-const contactObj: Record<string, any> = { mainEntity: cMainEntity };
-contactObj["@context"] = "https://schema.org";
-contactObj["@type"] = "ContactPage";
-const contactJsonLd = JSON.stringify(contactObj);
-
-// Map data for client-side script
-const mapLat = config.integrations.map_coordinates.lat;
-const mapLng = config.integrations.map_coordinates.lng;
-const mapTitle = config.site.title;
-const mapAddress = config.contact.address;
+const formAction = `https://formspree.io/f/${config.integrations.formspree_id}`;
 ---
 
-<BaseLayout title={`Contact Us | ${config.site.title}`} description={`Get in touch with ${config.site.title}. We're here to help with your needs.`}>
+<BaseLayout
+  title="Contact — Bobbi Rose"
+  description="Reach out about river trips, speaking, collaborations, community programs, or media inquiries. This work grows through relationship."
+>
   <Header slot="header" />
 
-  <!-- Hero Section -->
-  <section class="relative bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800 py-20">
-    <div class="absolute inset-0 opacity-5">
-      <div class="absolute inset-0" style="background-image: url('data:image/svg+xml,%3Csvg width=&quot;60&quot; height=&quot;60&quot; viewBox=&quot;0 0 60 60&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;%3E%3Cg fill=&quot;none&quot; fill-rule=&quot;evenodd&quot;%3E%3Cg fill=&quot;%23ffffff&quot; fill-opacity=&quot;0.15&quot;%3E%3Cpath d=&quot;M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z&quot;/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');"></div>
+  <!-- HERO -->
+  <section
+    class="relative pt-36 pb-20 flex flex-col justify-end overflow-hidden"
+    style="background: linear-gradient(160deg, #0F2027 0%, #1E3D4F 50%, #4A3728 100%); min-height: 44vh;"
+  >
+    <div class="absolute inset-0 pointer-events-none" style="opacity: 0.08;" aria-hidden="true">
+      <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <pattern id="contact-waves" x="0" y="0" width="200" height="60" patternUnits="userSpaceOnUse">
+            <path d="M0 30 Q25 20 50 30 Q75 40 100 30 Q125 20 150 30 Q175 40 200 30" stroke="rgba(196,145,58,0.7)" stroke-width="0.8" fill="none"/>
+          </pattern>
+        </defs>
+        <rect width="100%" height="100%" fill="url(#contact-waves)"/>
+      </svg>
     </div>
-    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-      <span class="text-amber-400 font-semibold text-sm uppercase tracking-wider">Get In Touch</span>
-      <h1 class="text-4xl md:text-5xl font-extrabold text-white mt-2 mb-6">
-        Start Your <span class="text-amber-400">Project Today</span>
+    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <nav class="mb-6" aria-label="Breadcrumb">
+        <ol class="flex items-center gap-2 text-xs" style="color: rgba(250,247,240,0.4);">
+          <li><a href={base} class="hover:opacity-80 transition-opacity">Home</a></li>
+          <li aria-hidden="true">/</li>
+          <li style="color: var(--color-gold);">Contact</li>
+        </ol>
+      </nav>
+      <p class="text-xs font-semibold uppercase tracking-widest mb-4" style="color: var(--color-gold); letter-spacing: 0.2em;">Contact</p>
+      <h1
+        class="text-4xl sm:text-5xl lg:text-6xl font-light text-white mb-4 leading-tight"
+        style="font-family: 'Cormorant Garamond', Georgia, serif;"
+      >
+        Let's Begin Something
       </h1>
-      <p class="text-xl text-blue-100 max-w-3xl mx-auto leading-relaxed">
-        Tell us about your renovation and get a free, detailed estimate within 48 hours. No pressure, no obligation.
+      <p class="text-base font-light max-w-2xl" style="color: rgba(250,247,240,0.62);">
+        Whether it's a river journey, a speaking invitation, a creative collaboration, or a mentorship conversation — reach out. This work grows through relationship.
       </p>
     </div>
   </section>
 
-  <!-- Contact Form & Info Section -->
-  <section class="py-20 bg-white">
+  <!-- MAIN CONTENT: What + Form -->
+  <section class="py-20 lg:py-28 animate-on-scroll" style="background-color: var(--color-cream);">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
-        <!-- Contact Form -->
-        <div class="animate-on-scroll">
-          <h2 class="text-3xl font-bold text-gray-900 mb-2">Send Us a Message</h2>
-          <p class="text-gray-500 mb-8">Fill out the form and we'll get back to you within one business day.</p>
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20">
 
+        <!-- Left: What to reach out about -->
+        <div>
+          <h2
+            class="text-2xl sm:text-3xl font-light mb-8"
+            style="font-family: 'Cormorant Garamond', Georgia, serif; color: var(--color-dark);"
+          >
+            What to reach out about
+          </h2>
+          <div class="space-y-4">
+            {[
+              { icon: '🛶', label: 'River trips & guiding inquiries' },
+              { icon: '🎤', label: 'Speaking, workshops & presentations' },
+              { icon: '🤝', label: 'Creative collaborations & partnerships' },
+              { icon: '🌿', label: 'Community programs & youth mentorship' },
+              { icon: '📰', label: 'Media, press & research requests' },
+            ].map((item) => (
+              <div
+                class="flex items-center gap-4 rounded-xl p-4 transition-all"
+                style="background: white; border: 1px solid var(--color-stone);"
+              >
+                <span class="text-xl flex-shrink-0" role="img" aria-hidden="true">{item.icon}</span>
+                <span class="text-sm font-medium" style="color: var(--color-dark);">{item.label}</span>
+              </div>
+            ))}
+          </div>
+
+          <!-- Social links -->
+          <div class="mt-12">
+            <h3
+              class="text-lg font-light mb-5"
+              style="font-family: 'Cormorant Garamond', Georgia, serif; color: var(--color-dark);"
+            >
+              Find Bobbi Rose
+            </h3>
+            <div class="space-y-3">
+              <a
+                href="https://instagram.com/river.beautyyy"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="flex items-center gap-3 group"
+              >
+                <div class="w-9 h-9 rounded-lg flex items-center justify-center" style="background: var(--color-stone);">
+                  <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" style="color: var(--color-mid);">
+                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                  </svg>
+                </div>
+                <div>
+                  <p class="text-sm font-medium" style="color: var(--color-dark);">Instagram</p>
+                  <p class="text-xs" style="color: var(--color-mid);">@river.beautyyy</p>
+                </div>
+              </a>
+
+              <a
+                href="https://www.facebook.com/broze14"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="flex items-center gap-3 group"
+              >
+                <div class="w-9 h-9 rounded-lg flex items-center justify-center" style="background: var(--color-stone);">
+                  <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" style="color: var(--color-mid);">
+                    <path fill-rule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" clip-rule="evenodd"/>
+                  </svg>
+                </div>
+                <div>
+                  <p class="text-sm font-medium" style="color: var(--color-dark);">Facebook</p>
+                  <p class="text-xs" style="color: var(--color-mid);">Bobbi Rose</p>
+                </div>
+              </a>
+
+              <a
+                href="https://tiktok.com/@river.beautyyy"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="flex items-center gap-3 group"
+              >
+                <div class="w-9 h-9 rounded-lg flex items-center justify-center" style="background: var(--color-stone);">
+                  <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" style="color: var(--color-mid);">
+                    <path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.18 8.18 0 004.78 1.52V6.75a4.85 4.85 0 01-1.01-.06z"/>
+                  </svg>
+                </div>
+                <div>
+                  <p class="text-sm font-medium" style="color: var(--color-dark);">TikTok</p>
+                  <p class="text-xs" style="color: var(--color-mid);">@river.beautyyy</p>
+                </div>
+              </a>
+
+              <a
+                href="https://www.dinjiizhuh.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="flex items-center gap-3 group"
+              >
+                <div class="w-9 h-9 rounded-lg flex items-center justify-center" style="background: var(--color-stone);">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color: var(--color-mid);">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9"/>
+                  </svg>
+                </div>
+                <div>
+                  <p class="text-sm font-medium" style="color: var(--color-dark);">Dinjii Zhuh Adventures</p>
+                  <p class="text-xs" style="color: var(--color-mid);">dinjiizhuh.com</p>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Contact Form -->
+        <div>
+          <h2
+            class="text-2xl sm:text-3xl font-light mb-8"
+            style="font-family: 'Cormorant Garamond', Georgia, serif; color: var(--color-dark);"
+          >
+            Send a message
+          </h2>
           <form
-            action={`https://formspree.io/f/${config.integrations.formspree_id}`}
+            action={formAction}
             method="POST"
-            class="space-y-6"
+            class="space-y-5"
             id="contact-form"
           >
             <div>
-              <label for="name" class="block text-sm font-medium text-gray-700 mb-2">
-                Your Name *
+              <label for="name" class="block text-xs font-semibold uppercase tracking-widest mb-2" style="color: var(--color-mid); letter-spacing: 0.1em;">
+                Your Name
               </label>
               <input
                 type="text"
                 id="name"
                 name="name"
                 required
-                class="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
-                placeholder="John Smith"
                 autocomplete="name"
+                placeholder="First and last name"
+                class="w-full px-4 py-3 rounded-lg text-sm border focus:ring-2 focus:ring-offset-0 outline-none transition-all"
+                style="border-color: var(--color-stone); background: white; color: var(--color-dark);"
               />
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <label for="phone" class="block text-sm font-medium text-gray-700 mb-2">
-                  Phone Number *
-                </label>
-                <input
-                  type="tel"
-                  id="phone"
-                  name="phone"
-                  required
-                  class="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
-                  placeholder="(720) 555-0193"
-                  autocomplete="tel"
-                />
-              </div>
-              <div>
-                <label for="email" class="block text-sm font-medium text-gray-700 mb-2">
-                  Email Address
-                </label>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  class="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
-                  placeholder="john@example.com"
-                  autocomplete="email"
-                />
-              </div>
+            <div>
+              <label for="email" class="block text-xs font-semibold uppercase tracking-widest mb-2" style="color: var(--color-mid); letter-spacing: 0.1em;">
+                Email Address
+              </label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                required
+                autocomplete="email"
+                placeholder="you@example.com"
+                class="w-full px-4 py-3 rounded-lg text-sm border focus:ring-2 focus:ring-offset-0 outline-none transition-all"
+                style="border-color: var(--color-stone); background: white; color: var(--color-dark);"
+              />
             </div>
 
             <div>
-              <label for="project-type" class="block text-sm font-medium text-gray-700 mb-2">
-                Project Type *
+              <label for="subject" class="block text-xs font-semibold uppercase tracking-widest mb-2" style="color: var(--color-mid); letter-spacing: 0.1em;">
+                What Brings You Here
               </label>
               <select
-                id="project-type"
-                name="project-type"
+                id="subject"
+                name="subject"
                 required
-                class="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                class="w-full px-4 py-3 rounded-lg text-sm border focus:ring-2 focus:ring-offset-0 outline-none transition-all appearance-none"
+                style="border-color: var(--color-stone); background: white; color: var(--color-dark);"
               >
-                <option value="">What can we help you with?</option>
-                <option value="kitchen-remodel">Kitchen Remodel</option>
-                <option value="bathroom-renovation">Bathroom Renovation</option>
-                <option value="home-addition">Home Addition</option>
-                <option value="basement-finish">Basement Finishing</option>
-                <option value="deck-patio">Deck or Patio</option>
-                <option value="whole-home">Whole-Home Renovation</option>
-                <option value="other">Other</option>
+                <option value="" disabled selected>Choose a topic...</option>
+                <option value="River Trip">River Trip</option>
+                <option value="Speaking">Speaking</option>
+                <option value="Collaboration">Collaboration</option>
+                <option value="Community Program">Community Program</option>
+                <option value="Media / Research">Media / Research</option>
+                <option value="Other">Other</option>
               </select>
             </div>
 
             <div>
-              <label for="message" class="block text-sm font-medium text-gray-700 mb-2">
-                Tell Us About Your Project *
+              <label for="message" class="block text-xs font-semibold uppercase tracking-widest mb-2" style="color: var(--color-mid); letter-spacing: 0.1em;">
+                Message
               </label>
               <textarea
                 id="message"
                 name="message"
-                rows="4"
                 required
-                class="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
-                placeholder="What are you looking to renovate? Any timeline or budget in mind?"
+                rows="6"
+                placeholder="Tell Bobbi Rose what you have in mind..."
+                class="w-full px-4 py-3 rounded-lg text-sm border focus:ring-2 focus:ring-offset-0 outline-none transition-all resize-none"
+                style="border-color: var(--color-stone); background: white; color: var(--color-dark);"
               ></textarea>
             </div>
 
-            <!-- Honeypot for spam protection -->
-            <input type="text" name="_gotcha" style="display:none" />
-
             <button
               type="submit"
-              class="w-full bg-blue-600 text-white py-3.5 px-6 rounded-lg font-semibold text-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
+              class="w-full py-3.5 rounded-lg font-semibold text-sm transition-all hover:opacity-90 hover:shadow-lg hover:-translate-y-0.5"
+              style="background-color: var(--color-gold); color: var(--color-dark);"
             >
-              Get Your Free Estimate
+              Send a Message
             </button>
-            <p class="text-xs text-gray-400 text-center mt-2">We respond within 24 hours. No obligation.</p>
           </form>
 
-          <!-- Form Status Messages -->
-          <div id="form-status" class="mt-4 p-4 rounded-md hidden" aria-live="polite" role="status">
-            <p id="form-message"></p>
+          <!-- Success message (hidden by default) -->
+          <div id="form-success" class="hidden mt-6 rounded-xl p-6 text-center" style="background: rgba(45,74,62,0.1); border: 1px solid rgba(45,74,62,0.2);">
+            <p class="text-base font-medium mb-1" style="color: var(--color-land);">Message sent.</p>
+            <p class="text-sm" style="color: var(--color-mid);">Bobbi Rose will be in touch. Thank you for reaching out.</p>
           </div>
         </div>
 
-        <!-- Contact Information -->
-        <div class="animate-on-scroll">
-          <h2 class="text-3xl font-bold text-gray-900 mb-2">Get In Touch</h2>
-          <p class="text-gray-500 mb-8">We're available during business hours and respond to messages within 24 hours.</p>
-
-          <div class="space-y-6">
-            <!-- Address -->
-            <div class="flex items-start space-x-4">
-              <div class="flex-shrink-0">
-                <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
-                  <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                  </svg>
-                </div>
-              </div>
-              <div>
-                <h3 class="text-lg font-semibold text-gray-900 mb-2">Address</h3>
-                <p class="text-gray-600">{config.contact.address}</p>
-              </div>
-            </div>
-
-            <!-- Phone -->
-            <div class="flex items-start space-x-4">
-              <div class="flex-shrink-0">
-                <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
-                  <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                  </svg>
-                </div>
-              </div>
-              <div>
-                <h3 class="text-lg font-semibold text-gray-900 mb-2">Phone</h3>
-                <a href={`tel:${config.contact.phone}`} class="text-blue-600 hover:text-blue-700 transition-colors">
-                  {config.contact.phone}
-                </a>
-              </div>
-            </div>
-
-            <!-- Email -->
-            <div class="flex items-start space-x-4">
-              <div class="flex-shrink-0">
-                <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
-                  <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                  </svg>
-                </div>
-              </div>
-              <div>
-                <h3 class="text-lg font-semibold text-gray-900 mb-2">Email</h3>
-                <a href={`mailto:${config.contact.email}`} class="text-blue-600 hover:text-blue-700 transition-colors">
-                  {config.contact.email}
-                </a>
-              </div>
-            </div>
-
-            <!-- Business Hours -->
-            <div class="flex items-start space-x-4">
-              <div class="flex-shrink-0">
-                <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
-                  <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                </div>
-              </div>
-              <div>
-                <h3 class="text-lg font-semibold text-gray-900 mb-2">Business Hours</h3>
-                <p class="text-gray-600">{config.contact.businessHours}</p>
-              </div>
-            </div>
-          </div>
-
-          <!-- Response Time -->
-          <div class="mt-8 p-4 bg-blue-50 rounded-lg">
-            <h3 class="text-lg font-semibold text-blue-900 mb-2">Quick Response</h3>
-            <p class="text-blue-700">
-              We typically respond to all inquiries within 24 hours during business days.
-              For urgent matters, please call us directly.
-            </p>
-          </div>
-        </div>
       </div>
     </div>
   </section>
 
-  <!-- Map Section -->
-  <section class="py-12 bg-gray-50">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="text-center mb-8">
-        <h2 class="text-3xl font-bold text-gray-900 mb-4">Find Us</h2>
-        <p class="text-xl text-gray-600">Visit our location or get directions</p>
-      </div>
-
-      <!-- Map Container -->
-      <div class="bg-white rounded-lg shadow-sm overflow-hidden">
-        <div id="map" class="h-96 w-full bg-gray-200 flex items-center justify-center">
-          <div class="text-center">
-            <svg class="w-12 h-12 text-gray-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-            </svg>
-            <p class="text-gray-500">Interactive Map</p>
-            <p class="text-sm text-gray-400 mt-2">{config.contact.address}</p>
-          </div>
-        </div>
+  <!-- LAND ACKNOWLEDGMENT -->
+  <section class="py-12 lg:py-16 animate-on-scroll" style="background-color: var(--color-stone);">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div
+        class="rounded-xl p-8"
+        style="background: rgba(255,255,255,0.5); border: 1px solid rgba(196,145,58,0.15);"
+      >
+        <p class="text-xs font-semibold uppercase tracking-widest mb-4" style="color: var(--color-gold); letter-spacing: 0.12em;">Land Acknowledgment</p>
+        <p class="text-sm leading-relaxed mb-4" style="color: var(--color-mid);">
+          Bobbi Rose lives and works on the traditional territory of the Kwanlin D&uuml;n First Nation and the Ta'an Kw&auml;ch'&auml;n Council in Whitehorse, Yukon, with deep roots in Teetl'it Gwich'in territory in Fort McPherson, NWT.
+        </p>
+        <a
+          href="https://www.whose.land/en/"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center gap-1.5 text-sm font-medium transition-opacity hover:opacity-70"
+          style="color: var(--color-river);"
+        >
+          Learn whose land you're on ↗
+        </a>
       </div>
     </div>
   </section>
-
-  <!-- JSON-LD Schema -->
-  <script type="application/ld+json" set:html={contactJsonLd} />
-
-  <!-- Map data passed to client -->
-  <div id="map-data" data-lat={mapLat} data-lng={mapLng} data-title={mapTitle} data-address={mapAddress} style="display:none;"></div>
-
-  <!-- Form submission handling -->
-  <script>
-    const form = document.getElementById('contact-form') as HTMLFormElement;
-    const formStatus = document.getElementById('form-status');
-    const formMessage = document.getElementById('form-message');
-    const submitBtn = form?.querySelector('button[type="submit"]') as HTMLButtonElement;
-
-    if (form) {
-      form.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        if (submitBtn) {
-          submitBtn.disabled = true;
-          submitBtn.innerHTML = '<svg class="animate-spin -ml-1 mr-2 h-5 w-5 text-white inline" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path></svg>Sending...';
-        }
-
-        const formData = new FormData(form);
-        try {
-          const response = await fetch(form.action, {
-            method: 'POST',
-            body: formData,
-            headers: { 'Accept': 'application/json' }
-          });
-
-          if (response.ok) {
-            formStatus!.className = 'mt-4 p-4 rounded-md bg-green-50 border border-green-200';
-            formMessage!.textContent = 'Thank you for your message! We\'ll get back to you within 24 hours.';
-            formMessage!.className = 'text-green-800 font-medium';
-            form.reset();
-          } else {
-            throw new Error('Form submission failed');
-          }
-        } catch {
-          formStatus!.className = 'mt-4 p-4 rounded-md bg-red-50 border border-red-200';
-          formMessage!.textContent = 'Sorry, there was an error sending your message. Please try again or call us directly.';
-          formMessage!.className = 'text-red-800 font-medium';
-        }
-
-        if (submitBtn) {
-          submitBtn.disabled = false;
-          submitBtn.textContent = 'Send Message';
-        }
-        formStatus!.classList.remove('hidden');
-      });
-    }
-
-    // Lazy-load Leaflet map when map section scrolls into view
-    const mapContainer = document.getElementById('map');
-    if (mapContainer) {
-      const mapObserver = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            mapObserver.unobserve(entry.target);
-            // Load Leaflet CSS
-            const link = document.createElement('link');
-            link.rel = 'stylesheet';
-            link.href = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';
-            document.head.appendChild(link);
-            // Load Leaflet JS
-            const script = document.createElement('script');
-            script.src = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';
-            script.onload = () => {
-              const mapData = document.getElementById('map-data');
-              if (!mapData) return;
-              const lat = parseFloat(mapData.dataset.lat || '0');
-              const lng = parseFloat(mapData.dataset.lng || '0');
-              const title = mapData.dataset.title || '';
-              const address = mapData.dataset.address || '';
-              const map = (window as any).L.map('map').setView([lat, lng], 15);
-              (window as any).L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-              }).addTo(map);
-              (window as any).L.marker([lat, lng]).addTo(map)
-                .bindPopup('<b>' + title + '</b><br>' + address)
-                .openPopup();
-            };
-            document.body.appendChild(script);
-          }
-        });
-      }, { rootMargin: '200px' });
-      mapObserver.observe(mapContainer);
-    }
-  </script>
 
   <Footer slot="footer" />
 </BaseLayout>
+
+<style>
+  input:focus, select:focus, textarea:focus {
+    border-color: var(--color-gold) !important;
+    box-shadow: 0 0 0 3px rgba(196, 145, 58, 0.15);
+  }
+</style>
+
+<script>
+  function initContactForm() {
+    const form = document.getElementById('contact-form') as HTMLFormElement | null;
+    const successMsg = document.getElementById('form-success');
+
+    if (form && successMsg) {
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const formData = new FormData(form);
+        const action = form.getAttribute('action') || '';
+
+        try {
+          const res = await fetch(action, {
+            method: 'POST',
+            body: formData,
+            headers: { Accept: 'application/json' },
+          });
+
+          if (res.ok) {
+            form.classList.add('hidden');
+            successMsg.classList.remove('hidden');
+          } else {
+            // Fall back to native submit on error
+            form.submit();
+          }
+        } catch {
+          form.submit();
+        }
+      });
+    }
+  }
+
+  document.addEventListener('astro:page-load', initContactForm);
+</script>

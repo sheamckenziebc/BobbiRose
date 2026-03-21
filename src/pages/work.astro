@@ -1,0 +1,272 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+const base = import.meta.env.BASE_URL;
+---
+
+<BaseLayout
+  title="Work & Offerings — Bobbi Rose"
+  description="River expeditions, youth programs, community experiences, and creative collaborations grounded in Teetl'it Gwich'in knowledge and values."
+>
+  <Header slot="header" />
+
+  <!-- HERO -->
+  <section
+    class="relative pt-36 pb-20 flex flex-col justify-end overflow-hidden"
+    style="background: linear-gradient(160deg, #0F2027 0%, #1E3D4F 50%, #2D4A3E 100%); min-height: 50vh;"
+  >
+    <div class="absolute inset-0 pointer-events-none" style="opacity: 0.08;" aria-hidden="true">
+      <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <pattern id="work-waves" x="0" y="0" width="200" height="60" patternUnits="userSpaceOnUse">
+            <path d="M0 30 Q25 20 50 30 Q75 40 100 30 Q125 20 150 30 Q175 40 200 30" stroke="rgba(196,145,58,0.7)" stroke-width="0.8" fill="none"/>
+            <path d="M0 50 Q25 40 50 50 Q75 60 100 50 Q125 40 150 50 Q175 60 200 50" stroke="rgba(196,145,58,0.3)" stroke-width="0.5" fill="none"/>
+          </pattern>
+        </defs>
+        <rect width="100%" height="100%" fill="url(#work-waves)"/>
+      </svg>
+    </div>
+    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <nav class="mb-6" aria-label="Breadcrumb">
+        <ol class="flex items-center gap-2 text-xs" style="color: rgba(250,247,240,0.4);">
+          <li><a href={base} class="hover:opacity-80 transition-opacity">Home</a></li>
+          <li aria-hidden="true">/</li>
+          <li style="color: var(--color-gold);">Work</li>
+        </ol>
+      </nav>
+      <p class="text-xs font-semibold uppercase tracking-widest mb-4" style="color: var(--color-gold); letter-spacing: 0.2em;">Work &amp; Offerings</p>
+      <h1
+        class="text-4xl sm:text-5xl lg:text-6xl font-light text-white mb-4 leading-tight"
+        style="font-family: 'Cormorant Garamond', Georgia, serif;"
+      >
+        Meeting You on the Water
+      </h1>
+      <p class="text-base font-light max-w-2xl" style="color: rgba(250,247,240,0.62);">
+        Land-based experiences, youth mentorship, community programs, and creative partnerships — all grounded in Teetl'it Gwich'in knowledge and values.
+      </p>
+    </div>
+  </section>
+
+  <!-- RIVER GUIDING -->
+  <section class="py-20 lg:py-28 animate-on-scroll" style="background-color: var(--color-cream);">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-start">
+
+        <!-- Content -->
+        <div>
+          <p class="text-xs font-semibold uppercase tracking-widest mb-4" style="color: var(--color-gold); letter-spacing: 0.15em;">On the River</p>
+          <h2
+            class="text-3xl sm:text-4xl font-light mb-6 leading-tight"
+            style="font-family: 'Cormorant Garamond', Georgia, serif; color: var(--color-dark);"
+          >
+            River Journeys with Dinjii Zhuh Adventures
+          </h2>
+          <p class="text-base leading-relaxed mb-6" style="color: var(--color-mid);">
+            Multi-day canoe and raft journeys on the rivers of Yukon and the NWT. These trips are led with a guiding philosophy rooted in land stewardship, Gwich'in cultural knowledge, and genuine relationship with place. Appropriate for small groups, film crews, researchers, families, and those seeking something more than a tour.
+          </p>
+          <ul class="space-y-3 mb-8">
+            {[
+              'Cultural storytelling on the water',
+              'Wildlife and ecology interpretation',
+              'Camp-based travel',
+              'Custom itineraries',
+              "Gwich'in-led from planning to paddle",
+            ].map((item) => (
+              <li class="flex items-start gap-3 text-sm" style="color: var(--color-mid);">
+                <span class="mt-1 flex-shrink-0 w-1.5 h-1.5 rounded-full" style="background: var(--color-gold);"></span>
+                {item}
+              </li>
+            ))}
+          </ul>
+          <div class="flex flex-wrap gap-4">
+            <a
+              href="https://www.dinjiizhuh.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-semibold transition-all hover:opacity-90"
+              style="background-color: var(--color-gold); color: var(--color-dark);"
+            >
+              Dinjii Zhuh Adventures ↗
+            </a>
+            <a
+              href="https://nahanni.com/guide/bobbi-rose-koe/"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-medium transition-all hover:opacity-80"
+              style="border: 1px solid rgba(30,61,79,0.25); color: var(--color-river);"
+            >
+              Nahanni Guide Profile ↗
+            </a>
+          </div>
+        </div>
+
+        <!-- Visual accent -->
+        <div
+          class="rounded-2xl overflow-hidden flex items-end"
+          style="background: linear-gradient(160deg, #1E3D4F 0%, #2D4A3E 100%); min-height: 380px; position: relative;"
+        >
+          <div class="absolute inset-0 pointer-events-none" style="opacity: 0.1;" aria-hidden="true">
+            <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <pattern id="river-card" x="0" y="0" width="120" height="40" patternUnits="userSpaceOnUse">
+                  <path d="M0 20 Q30 10 60 20 Q90 30 120 20" stroke="#C4913A" stroke-width="1.2" fill="none"/>
+                </pattern>
+              </defs>
+              <rect width="100%" height="100%" fill="url(#river-card)"/>
+            </svg>
+          </div>
+          <div class="relative z-10 p-8">
+            <div class="w-12 h-12 rounded-lg flex items-center justify-center mb-4" style="background: rgba(196,145,58,0.2);">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color: var(--color-gold);">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 17c1.5-1.5 3-1.5 4.5 0S11 18.5 12.5 17s3-1.5 4.5 0 3 1.5 4.5 0M3 12c1.5-1.5 3-1.5 4.5 0S11 13.5 12.5 12s3-1.5 4.5 0 3 1.5 4.5 0M3 7c1.5-1.5 3-1.5 4.5 0S11 8.5 12.5 7s3-1.5 4.5 0 3 1.5 4.5 0"/>
+              </svg>
+            </div>
+            <p class="text-white text-sm font-light" style="font-family: 'Cormorant Garamond', Georgia, serif; font-size: 1.1rem; color: rgba(250,247,240,0.8);">Photo to be added</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- YOUTH PROGRAMS -->
+  <section class="py-20 lg:py-24 animate-on-scroll" style="background-color: var(--color-river);">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="max-w-2xl">
+        <p class="text-xs font-semibold uppercase tracking-widest mb-4" style="color: var(--color-gold); letter-spacing: 0.15em;">Youth Work</p>
+        <h2
+          class="text-3xl sm:text-4xl font-light text-white mb-6 leading-tight"
+          style="font-family: 'Cormorant Garamond', Georgia, serif;"
+        >
+          Building the Next Generation of Land Stewards
+        </h2>
+        <p class="text-base leading-relaxed mb-8" style="color: rgba(250,247,240,0.68);">
+          Youth river guide training programs that combine practical skills with cultural identity, land knowledge, and leadership development. Informed by the Arctic Inspiration Prize–funded Indigenous Youth River Guide Training initiative.
+        </p>
+        <a
+          href={`${base}contact/`}
+          class="inline-flex items-center gap-2 px-6 py-3 rounded-lg text-sm font-semibold transition-all hover:opacity-90"
+          style="background-color: var(--color-gold); color: var(--color-dark);"
+        >
+          Inquire About Youth Programs
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- COMMUNITY TRIPS -->
+  <section class="py-20 lg:py-24 animate-on-scroll" style="background-color: var(--color-cream);">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+        <div>
+          <p class="text-xs font-semibold uppercase tracking-widest mb-4" style="color: var(--color-gold); letter-spacing: 0.15em;">Community</p>
+          <h2
+            class="text-3xl sm:text-4xl font-light mb-6 leading-tight"
+            style="font-family: 'Cormorant Garamond', Georgia, serif; color: var(--color-dark);"
+          >
+            Community-Based Experiences
+          </h2>
+          <p class="text-base leading-relaxed mb-8" style="color: var(--color-mid);">
+            Culturally grounded river and land experiences designed for Indigenous communities, urban reconnection programs, and organizations working to strengthen the relationship between people and place. Available for groups.
+          </p>
+          <a
+            href={`${base}contact/`}
+            class="inline-flex items-center gap-2 px-6 py-3 rounded-lg text-sm font-semibold transition-all hover:opacity-90"
+            style="background-color: var(--color-gold); color: var(--color-dark);"
+          >
+            Inquire About Group Trips
+          </a>
+        </div>
+
+        <!-- Indigenous Tourism & Consulting -->
+        <div
+          class="rounded-2xl p-8 relative overflow-hidden"
+          style="background: linear-gradient(145deg, #2D4A3E 0%, #4A3728 100%);"
+        >
+          <div class="absolute inset-0 pointer-events-none" style="opacity: 0.08;" aria-hidden="true">
+            <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <pattern id="consulting-waves" x="0" y="0" width="120" height="40" patternUnits="userSpaceOnUse">
+                  <path d="M0 20 Q30 10 60 20 Q90 30 120 20" stroke="#C4913A" stroke-width="1" fill="none"/>
+                </pattern>
+              </defs>
+              <rect width="100%" height="100%" fill="url(#consulting-waves)"/>
+            </svg>
+          </div>
+          <div class="relative z-10">
+            <p class="text-xs uppercase tracking-widest mb-3" style="color: var(--color-gold); letter-spacing: 0.15em;">Tourism &amp; Consulting</p>
+            <h3 class="text-2xl font-light text-white mb-3" style="font-family: 'Cormorant Garamond', Georgia, serif;">
+              Indigenous Tourism Consulting &amp; Speaking
+            </h3>
+            <p class="text-sm leading-relaxed mb-6" style="color: rgba(250,247,240,0.62);">
+              Consulting on Indigenous tourism design, cultural protocol, and land-based program development. Available for speaking engagements at conferences, universities, and community events. Topics include Indigenous guiding, water stewardship, cultural tourism, and youth leadership.
+            </p>
+            <a
+              href={`${base}contact/`}
+              class="inline-flex items-center gap-2 text-sm font-medium transition-opacity hover:opacity-80"
+              style="color: var(--color-gold);"
+            >
+              Reach Out &rarr;
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CREATIVE & COLLABORATIVE WORK -->
+  <section
+    class="py-20 lg:py-24 animate-on-scroll"
+    style="background: linear-gradient(160deg, #1A1614 0%, #2D2218 60%, #1E3D4F 100%);"
+  >
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="max-w-2xl">
+        <p class="text-xs font-semibold uppercase tracking-widest mb-4" style="color: var(--color-gold); letter-spacing: 0.15em;">Creative Work</p>
+        <h2
+          class="text-3xl sm:text-4xl font-light text-white mb-6 leading-tight"
+          style="font-family: 'Cormorant Garamond', Georgia, serif;"
+        >
+          Collaborations, Workshops &amp; Creative Projects
+        </h2>
+        <p class="text-base leading-relaxed mb-8" style="color: rgba(250,247,240,0.68);">
+          Open to creative partnerships that are values-aligned — fashion, art, documentary, storytelling, research, and brand collaborations that center land, culture, and Indigenous voice.
+        </p>
+        <a
+          href={`${base}contact/`}
+          class="inline-flex items-center gap-2 px-6 py-3 rounded-lg text-sm font-semibold transition-all hover:opacity-90"
+          style="background-color: var(--color-gold); color: var(--color-dark);"
+        >
+          Start a Creative Conversation
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- INQUIRY CTA -->
+  <section
+    class="py-16 lg:py-20 animate-on-scroll"
+    style="background: linear-gradient(135deg, #4A3728 0%, #2D4A3E 100%);"
+  >
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <h2
+        class="text-2xl sm:text-3xl font-light text-white mb-4"
+        style="font-family: 'Cormorant Garamond', Georgia, serif;"
+      >
+        Ready to work together?
+      </h2>
+      <p class="text-sm leading-relaxed max-w-xl mx-auto mb-8" style="color: rgba(250,247,240,0.65);">
+        Every project begins with a conversation. Reach out to talk about what you have in mind — whether it's a river journey, a school visit, a collaboration, or something new.
+      </p>
+      <a
+        href={`${base}contact/`}
+        class="inline-flex items-center px-8 py-3.5 rounded-lg font-semibold text-sm transition-all hover:shadow-xl hover:-translate-y-0.5"
+        style="background-color: var(--color-gold); color: var(--color-dark);"
+      >
+        Start a Conversation
+      </a>
+    </div>
+  </section>
+
+  <Footer slot="footer" />
+</BaseLayout>
