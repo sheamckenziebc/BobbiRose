@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(dir:*)",
+      "Bash(git -C \"C:\\\\Users\\\\sheam\\\\OneDrive\\\\Documents\\\\GitHub\\\\mastertemplate1\" log --oneline -10)",
+      "Bash(npm run build:*)"
+    ]
+  }
+}

@@ -1,0 +1,49 @@
+# Summit Pro Builders - Configuration
+# General contractor serving the Denver metro area
+
+site:
+  title: "Summit Pro Builders"
+  description: "Denver's trusted general contractor for kitchen remodels, bathroom renovations, home additions, and whole-home renovations. Licensed, insured, and committed to quality craftsmanship."
+  url: "https://sheamckenziebc.github.io/mastertemplate1"
+  author: "Summit Pro Builders"
+
+branding:
+  logo: "/assets/logo.svg"
+  primaryColor: "#1e3a5f"
+  secondaryColor: "#2563eb"
+  accentColor: "#f59e0b"
+  fontFamily: "Inter, system-ui, sans-serif"
+
+contact:
+  email: "info@summitprobuilders.com"
+  phone: "+1 (720) 555-0193"
+  address: "4821 Pearl St, Suite 200, Boulder, CO 80301"
+  businessHours: "Mon-Fri 7AM-6PM | Sat 8AM-2PM"
+
+social:
+  facebook: "https://facebook.com/summitprobuilders"
+  twitter: ""
+  instagram: "https://instagram.com/summitprobuilders"
+  linkedin: "https://linkedin.com/company/summitprobuilders"
+  youtube: ""
+
+features:
+  blog: true
+  products: true
+  testimonials: true
+  faq: true
+  search: false
+  comments: false
+  analytics: false
+
+integrations:
+  formspree_id: "your-formspree-id"
+  google_analytics: ""
+  map_coordinates:
+    lat: 39.7392
+    lng: -104.9903
+
+seo:
+  keywords: ["general contractor Denver", "home remodeling Colorado", "kitchen remodel Boulder", "bathroom renovation Denver", "home additions", "licensed contractor", "Summit Pro Builders"]
+  og_image: "/assets/og-image.svg"
+  twitter_card: "summary_large_image"

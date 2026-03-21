@@ -1,0 +1,1311 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { readFileSync } from 'fs';
+import { join } from 'path';
+import yaml from 'js-yaml';
+
+const configPath = join(process.cwd(), 'config.yaml');
+const config = yaml.load(readFileSync(configPath, 'utf8'));
+const base = import.meta.env.BASE_URL;
+
+const templates = [
+  {
+    name: "Starter",
+    price: "$497",
+    period: "one-time",
+    description: "Everything a new business needs to get online fast.",
+    features: [
+      "5-page responsive website",
+      "Mobile-optimized design",
+      "Contact form with email notifications",
+      "Google Maps integration",
+      "Basic SEO setup",
+      "SSL certificate included",
+      "1 round of revisions",
+    ],
+    notIncluded: [
+      "Blog functionality",
+      "Custom domain setup",
+      "Ongoing maintenance",
+    ],
+    cta: "Get Started",
+    popular: false,
+    color: "blue"
+  },
+  {
+    name: "Professional",
+    price: "$997",
+    period: "one-time",
+    description: "The complete package for serious businesses ready to grow.",
+    features: [
+      "9-page responsive website",
+      "Mobile-optimized + tablet tested",
+      "Contact form with smart routing",
+      "Google Maps integration",
+      "Blog with 3 starter articles",
+      "FAQ page with structured data",
+      "Advanced SEO (Schema markup, sitemap, meta tags)",
+      "Social media integration",
+      "Google Analytics setup",
+      "Custom domain setup",
+      "2 rounds of revisions",
+      "30 days of post-launch support",
+    ],
+    notIncluded: [
+      "Monthly content updates",
+    ],
+    cta: "Most Popular",
+    popular: true,
+    color: "amber"
+  },
+  {
+    name: "Enterprise",
+    price: "$1,997",
+    period: "one-time",
+    description: "Full-service web presence for established businesses scaling up.",
+    features: [
+      "Unlimited pages",
+      "Custom design to match your brand",
+      "Mobile + tablet + desktop optimized",
+      "Advanced contact forms with file uploads",
+      "Blog with content strategy",
+      "FAQ, testimonials, portfolio pages",
+      "Full SEO audit and optimization",
+      "Google Business Profile optimization",
+      "Social media integration + sharing",
+      "Analytics dashboard setup",
+      "Custom domain + email setup",
+      "Speed optimization (90+ Lighthouse)",
+      "Unlimited revisions",
+      "90 days of post-launch support",
+      "Priority response time",
+    ],
+    notIncluded: [],
+    cta: "Contact Us",
+    popular: false,
+    color: "blue"
+  }
+];
+
+const industries = [
+  { name: "General Contractors", icon: "M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" },
+  { name: "Plumbers", icon: "M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" },
+  { name: "Electricians", icon: "M13 10V3L4 14h7v7l9-11h-7z" },
+  { name: "HVAC Companies", icon: "M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" },
+  { name: "Roofers", icon: "M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" },
+  { name: "Landscapers", icon: "M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" },
+  { name: "Painters", icon: "M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" },
+  { name: "Auto Shops", icon: "M13 10V3L4 14h7v7l9-11h-7z" },
+];
+
+const faqs = [
+  {
+    question: "What's included in the one-time price?",
+    answer: "Design, development, deployment, and everything listed in your chosen tier. No monthly fees unless you opt for our hosting/maintenance add-on ($29/mo). You own the code."
+  },
+  {
+    question: "How long does it take to build?",
+    answer: "Starter: 5-7 business days. Professional: 10-14 business days. Enterprise: 3-4 weeks. We work fast because we start from proven templates, not blank screens."
+  },
+  {
+    question: "Do I own the website?",
+    answer: "100%. You get the full source code, hosting can be anywhere (we recommend GitHub Pages - it's free), and you're never locked into a contract."
+  },
+  {
+    question: "What if I need changes later?",
+    answer: "Your revision rounds are included in the price. After launch, you can make changes yourself (it's just HTML), hire any developer, or add our maintenance plan for $29/month."
+  },
+  {
+    question: "Do you build on WordPress?",
+    answer: "No. We build static sites using modern tools (Astro + Tailwind CSS). They're faster, more secure, cheaper to host, and don't need constant updates. Your site loads in under 1 second."
+  },
+  {
+    question: "Can I see a live demo?",
+    answer: "You're looking at one. This entire site is built with our Professional template. Every page, every animation, every feature you see here is included."
+  }
+];
+---
+
+<BaseLayout title={`Website Templates for Blue Collar Businesses | ${config.site.title}`} description="Professional website templates built for contractors, plumbers, electricians, and trades businesses. Transparent pricing. No monthly fees. Fast delivery.">
+  <Header slot="header" />
+
+  <!-- Hero -->
+  <section class="relative bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800 py-24 overflow-hidden">
+    <div class="absolute inset-0 opacity-10">
+      <div class="absolute inset-0" style="background-image: url('data:image/svg+xml,%3Csvg width=&quot;60&quot; height=&quot;60&quot; viewBox=&quot;0 0 60 60&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;%3E%3Cg fill=&quot;none&quot; fill-rule=&quot;evenodd&quot;%3E%3Cg fill=&quot;%23ffffff&quot; fill-opacity=&quot;0.15&quot;%3E%3Cpath d=&quot;M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z&quot;/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');"></div>
+    </div>
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <div class="inline-flex items-center px-4 py-2 bg-amber-500/20 border border-amber-500/30 rounded-full text-amber-300 text-sm font-medium mb-6">
+        No monthly fees. You own everything.
+      </div>
+      <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold text-white mb-6 leading-tight">
+        Websites That Work <br class="hidden md:block"/><span class="bg-gradient-to-r from-amber-300 to-amber-500 bg-clip-text text-transparent">As Hard As You Do</span>
+      </h1>
+      <p class="text-xl text-blue-100 max-w-3xl mx-auto leading-relaxed mb-8">
+        Professional websites built specifically for trades and blue collar businesses. No subscriptions, no page builders, no BS. Just fast, professional sites that bring in leads.
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center mb-10">
+        <a href="#pricing" class="inline-flex items-center justify-center bg-amber-500 text-slate-900 px-8 py-4 rounded-lg font-bold text-lg hover:bg-amber-400 transition-all shadow-lg">
+          See Pricing
+          <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/></svg>
+        </a>
+        <a href="#demo" class="inline-flex items-center justify-center border-2 border-white/30 text-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-white/10 transition-all">
+          See Live Demo
+        </a>
+      </div>
+
+      <!-- Hero Social Proof -->
+      <div class="flex flex-wrap items-center justify-center gap-6 md:gap-10 pt-8 border-t border-white/10">
+        <div class="text-center">
+          <p class="text-2xl font-extrabold text-white">47+</p>
+          <p class="text-xs text-blue-300">Sites Built</p>
+        </div>
+        <div class="text-center">
+          <p class="text-2xl font-extrabold text-white">8 days</p>
+          <p class="text-xs text-blue-300">Avg. Delivery</p>
+        </div>
+        <div class="text-center">
+          <p class="text-2xl font-extrabold text-amber-400">4.9/5</p>
+          <p class="text-xs text-blue-300">Client Rating</p>
+        </div>
+        <div class="text-center">
+          <p class="text-2xl font-extrabold text-green-400">$0</p>
+          <p class="text-xs text-blue-300">Monthly Fees</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Wave Divider -->
+  <div class="bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800 -mb-1">
+    <svg viewBox="0 0 1440 60" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full" preserveAspectRatio="none">
+      <path d="M0 60L60 52C120 44 240 28 360 24C480 20 600 28 720 32C840 36 960 36 1080 32C1200 28 1320 20 1380 16L1440 12V60H1380C1320 60 1200 60 1080 60C960 60 840 60 720 60C600 60 480 60 360 60C240 60 120 60 60 60H0Z" fill="white"/>
+    </svg>
+  </div>
+
+  <!-- Problem Section -->
+  <section class="py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12 animate-on-scroll">
+        <span class="text-red-500 font-semibold text-sm uppercase tracking-wider">The Hard Truth</span>
+        <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mt-2 mb-4">Is Your Online Presence Costing You Jobs?</h2>
+        <p class="text-xl text-gray-500 max-w-2xl mx-auto">
+          While you're doing great work, your competitors are getting found online first.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto stagger-children">
+        <div class="animate-on-scroll flex items-start gap-4 p-5 bg-red-50 rounded-xl border border-red-100">
+          <div class="w-10 h-10 bg-red-100 rounded-lg flex items-center justify-center flex-shrink-0">
+            <svg class="w-5 h-5 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+          </div>
+          <div>
+            <h3 class="font-bold text-gray-900 mb-1">No Website At All</h3>
+            <p class="text-sm text-gray-600">97% of people search online before hiring a local service. No site = invisible to most customers.</p>
+          </div>
+        </div>
+
+        <div class="animate-on-scroll flex items-start gap-4 p-5 bg-red-50 rounded-xl border border-red-100">
+          <div class="w-10 h-10 bg-red-100 rounded-lg flex items-center justify-center flex-shrink-0">
+            <svg class="w-5 h-5 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+          </div>
+          <div>
+            <h3 class="font-bold text-gray-900 mb-1">Outdated or Ugly Site</h3>
+            <p class="text-sm text-gray-600">75% of people judge your credibility by your website. That 2015 design is costing you trust before you even pick up the phone.</p>
+          </div>
+        </div>
+
+        <div class="animate-on-scroll flex items-start gap-4 p-5 bg-red-50 rounded-xl border border-red-100">
+          <div class="w-10 h-10 bg-red-100 rounded-lg flex items-center justify-center flex-shrink-0">
+            <svg class="w-5 h-5 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+          </div>
+          <div>
+            <h3 class="font-bold text-gray-900 mb-1">Bleeding Monthly Fees</h3>
+            <p class="text-sm text-gray-600">Wix, Squarespace, WordPress hosting — $50-$200/month adds up to thousands. That's money off your bottom line, every year.</p>
+          </div>
+        </div>
+
+        <div class="animate-on-scroll flex items-start gap-4 p-5 bg-red-50 rounded-xl border border-red-100">
+          <div class="w-10 h-10 bg-red-100 rounded-lg flex items-center justify-center flex-shrink-0">
+            <svg class="w-5 h-5 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+          </div>
+          <div>
+            <h3 class="font-bold text-gray-900 mb-1">Losing to the Other Guy</h3>
+            <p class="text-sm text-gray-600">Homeowners compare 3-4 contractors before calling. The one with the professional website gets the first call.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="text-center mt-12 animate-on-scroll">
+        <p class="text-lg font-semibold text-gray-900 mb-4">Ready to fix this? It takes less than two weeks.</p>
+        <a href="#pricing" class="inline-flex items-center justify-center bg-blue-600 text-white px-6 py-3 rounded-lg font-bold hover:bg-blue-700 transition-colors">
+          See Your Options
+          <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Before vs After -->
+  <section class="py-20 bg-gray-50">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12 animate-on-scroll">
+        <span class="text-blue-600 font-semibold text-sm uppercase tracking-wider">See the Difference</span>
+        <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mt-2 mb-4">What Your Customers See Right Now vs. What They Could See</h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 animate-on-scroll">
+        <!-- Before -->
+        <div class="relative">
+          <div class="absolute -top-3 left-4 bg-red-500 text-white text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full z-10">Before</div>
+          <div class="bg-white rounded-2xl border-2 border-red-200 overflow-hidden shadow-sm">
+            <!-- Fake browser bar -->
+            <div class="bg-gray-100 px-4 py-2 flex items-center gap-2 border-b border-gray-200">
+              <div class="flex gap-1.5">
+                <div class="w-2.5 h-2.5 rounded-full bg-red-400"></div>
+                <div class="w-2.5 h-2.5 rounded-full bg-yellow-400"></div>
+                <div class="w-2.5 h-2.5 rounded-full bg-green-400"></div>
+              </div>
+              <div class="flex-1 bg-white rounded text-xs text-gray-400 px-3 py-1 text-center">your-business.com</div>
+            </div>
+            <!-- Fake bad website -->
+            <div class="p-6 space-y-4">
+              <div class="h-8 bg-gray-300 rounded w-2/3"></div>
+              <div class="flex gap-4">
+                <div class="h-3 bg-gray-200 rounded flex-1"></div>
+                <div class="h-3 bg-gray-200 rounded flex-1"></div>
+                <div class="h-3 bg-gray-200 rounded flex-1"></div>
+              </div>
+              <div class="h-32 bg-gray-100 rounded-lg border-2 border-dashed border-gray-300 flex items-center justify-center">
+                <svg class="w-12 h-12 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+              </div>
+              <div class="space-y-2">
+                <div class="h-3 bg-gray-200 rounded w-full"></div>
+                <div class="h-3 bg-gray-200 rounded w-5/6"></div>
+                <div class="h-3 bg-gray-200 rounded w-4/6"></div>
+              </div>
+              <div class="h-8 bg-gray-300 rounded w-1/3"></div>
+            </div>
+          </div>
+          <ul class="mt-4 space-y-2">
+            <li class="flex items-center gap-2 text-sm text-red-600"><svg class="w-4 h-4 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>Slow loading, low PageSpeed score</li>
+            <li class="flex items-center gap-2 text-sm text-red-600"><svg class="w-4 h-4 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>No mobile optimization</li>
+            <li class="flex items-center gap-2 text-sm text-red-600"><svg class="w-4 h-4 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>Generic template look, no trust</li>
+            <li class="flex items-center gap-2 text-sm text-red-600"><svg class="w-4 h-4 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>$50-200/month just to keep it running</li>
+          </ul>
+        </div>
+
+        <!-- After -->
+        <div class="relative">
+          <div class="absolute -top-3 left-4 bg-green-500 text-white text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full z-10">After</div>
+          <div class="bg-white rounded-2xl border-2 border-green-200 overflow-hidden shadow-lg ring-1 ring-green-100">
+            <!-- Fake browser bar -->
+            <div class="bg-gray-100 px-4 py-2 flex items-center gap-2 border-b border-gray-200">
+              <div class="flex gap-1.5">
+                <div class="w-2.5 h-2.5 rounded-full bg-red-400"></div>
+                <div class="w-2.5 h-2.5 rounded-full bg-yellow-400"></div>
+                <div class="w-2.5 h-2.5 rounded-full bg-green-400"></div>
+              </div>
+              <div class="flex-1 bg-white rounded text-xs text-gray-700 px-3 py-1 text-center font-medium flex items-center justify-center gap-1">
+                <svg class="w-3 h-3 text-green-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"/></svg>
+                yourbusiness.com
+              </div>
+            </div>
+            <!-- Fake good website -->
+            <div class="p-6 space-y-4">
+              <div class="bg-gradient-to-r from-slate-900 to-blue-900 rounded-lg p-4">
+                <div class="h-3 bg-white/30 rounded w-1/3 mb-2"></div>
+                <div class="h-5 bg-white/80 rounded w-2/3 mb-2"></div>
+                <div class="h-3 bg-white/40 rounded w-1/2 mb-3"></div>
+                <div class="h-7 bg-amber-500 rounded w-1/3"></div>
+              </div>
+              <div class="flex gap-3">
+                <div class="flex-1 bg-blue-50 rounded-lg p-3 border border-blue-100">
+                  <div class="w-6 h-6 bg-blue-600 rounded mb-2"></div>
+                  <div class="h-3 bg-blue-200 rounded w-2/3 mb-1"></div>
+                  <div class="h-2 bg-blue-100 rounded w-full"></div>
+                </div>
+                <div class="flex-1 bg-blue-50 rounded-lg p-3 border border-blue-100">
+                  <div class="w-6 h-6 bg-blue-600 rounded mb-2"></div>
+                  <div class="h-3 bg-blue-200 rounded w-2/3 mb-1"></div>
+                  <div class="h-2 bg-blue-100 rounded w-full"></div>
+                </div>
+                <div class="flex-1 bg-blue-50 rounded-lg p-3 border border-blue-100">
+                  <div class="w-6 h-6 bg-blue-600 rounded mb-2"></div>
+                  <div class="h-3 bg-blue-200 rounded w-2/3 mb-1"></div>
+                  <div class="h-2 bg-blue-100 rounded w-full"></div>
+                </div>
+              </div>
+              <div class="flex gap-2 items-center">
+                <div class="flex -space-x-1">
+                  <div class="w-5 h-5 rounded-full bg-amber-400 border border-white"></div>
+                  <div class="w-5 h-5 rounded-full bg-amber-400 border border-white"></div>
+                  <div class="w-5 h-5 rounded-full bg-amber-400 border border-white"></div>
+                  <div class="w-5 h-5 rounded-full bg-amber-400 border border-white"></div>
+                  <div class="w-5 h-5 rounded-full bg-amber-400 border border-white"></div>
+                </div>
+                <div class="h-2 bg-gray-200 rounded w-1/3"></div>
+              </div>
+            </div>
+          </div>
+          <ul class="mt-4 space-y-2">
+            <li class="flex items-center gap-2 text-sm text-green-700"><svg class="w-4 h-4 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>90+ PageSpeed, loads in under 1 second</li>
+            <li class="flex items-center gap-2 text-sm text-green-700"><svg class="w-4 h-4 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>Perfect on every device and screen size</li>
+            <li class="flex items-center gap-2 text-sm text-green-700"><svg class="w-4 h-4 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>Professional design that builds instant trust</li>
+            <li class="flex items-center gap-2 text-sm text-green-700"><svg class="w-4 h-4 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>$0/month — you own everything outright</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- What You Get -->
+  <section class="py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16 animate-on-scroll">
+        <span class="text-blue-600 font-semibold text-sm uppercase tracking-wider">The Solution</span>
+        <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mt-2 mb-4">What You Actually Get</h2>
+        <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+          Every site we build comes ready to bring in leads on day one.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 stagger-children">
+        <div class="animate-on-scroll p-6 bg-gray-50 rounded-2xl border border-gray-100">
+          <div class="w-12 h-12 bg-blue-600 rounded-xl flex items-center justify-center mb-4">
+            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+          </div>
+          <h3 class="text-lg font-bold text-gray-900 mb-2">Mobile-First</h3>
+          <p class="text-sm text-gray-600">70% of your customers find you on their phone. Every site looks perfect on mobile, tablet, and desktop.</p>
+        </div>
+        <div class="animate-on-scroll p-6 bg-gray-50 rounded-2xl border border-gray-100">
+          <div class="w-12 h-12 bg-blue-600 rounded-xl flex items-center justify-center mb-4">
+            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+          </div>
+          <h3 class="text-lg font-bold text-gray-900 mb-2">Blazing Fast</h3>
+          <p class="text-sm text-gray-600">Sub-1-second load times. No bloated page builders. Static HTML that scores 90+ on Google PageSpeed.</p>
+        </div>
+        <div class="animate-on-scroll p-6 bg-gray-50 rounded-2xl border border-gray-100">
+          <div class="w-12 h-12 bg-blue-600 rounded-xl flex items-center justify-center mb-4">
+            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+          </div>
+          <h3 class="text-lg font-bold text-gray-900 mb-2">SEO Built In</h3>
+          <p class="text-sm text-gray-600">Schema markup, meta tags, sitemaps, and structured data so Google knows exactly what you do and where.</p>
+        </div>
+        <div class="animate-on-scroll p-6 bg-gray-50 rounded-2xl border border-gray-100">
+          <div class="w-12 h-12 bg-blue-600 rounded-xl flex items-center justify-center mb-4">
+            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+          </div>
+          <h3 class="text-lg font-bold text-gray-900 mb-2">Lead Generation</h3>
+          <p class="text-sm text-gray-600">Click-to-call buttons, contact forms, sticky CTAs, and mobile call bar. Every page is built to convert visitors into calls.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Every Feature Included -->
+  <section class="py-16 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-10 animate-on-scroll">
+        <h2 class="text-2xl font-bold text-gray-900 mb-2">Every Site Comes Loaded</h2>
+        <p class="text-gray-500">Here's everything that's built into your website — no add-ons, no upsells.</p>
+      </div>
+
+      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 animate-on-scroll">
+        {[
+          { icon: "M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z", label: "Click-to-Call Buttons" },
+          { icon: "M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z", label: "Contact Form" },
+          { icon: "M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z", label: "Google Maps" },
+          { icon: "M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z", label: "Mobile CTA Bar" },
+          { icon: "M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z", label: "SEO Schema Markup" },
+          { icon: "M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z", label: "Analytics Ready" },
+          { icon: "M13 10V3L4 14h7v7l9-11h-7z", label: "90+ PageSpeed Score" },
+          { icon: "M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z", label: "SSL Certificate" },
+          { icon: "M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z", label: "Privacy & Terms Pages" },
+          { icon: "M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z", label: "FAQ with Schema" },
+          { icon: "M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z", label: "Scroll Animations" },
+          { icon: "M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z", label: "Custom SVG Graphics" },
+        ].map((feat) => (
+          <div class="flex items-center gap-3 p-3 bg-gray-50 rounded-lg border border-gray-100">
+            <svg class="w-5 h-5 text-blue-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d={feat.icon}/></svg>
+            <span class="text-sm font-medium text-gray-700">{feat.label}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Industries -->
+  <section class="py-16 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-10">
+        <h2 class="text-2xl font-bold text-gray-900 mb-2">Built for Blue Collar Businesses</h2>
+        <p class="text-gray-600">Templates designed for the trades that build America.</p>
+      </div>
+      <div class="flex flex-wrap justify-center gap-3">
+        {industries.map((ind) => (
+          <div class="inline-flex items-center gap-2 px-4 py-2.5 bg-white rounded-full border border-gray-200 text-sm font-medium text-gray-700 hover:border-blue-300 hover:text-blue-600 transition-colors">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d={ind.icon}/></svg>
+            {ind.name}
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Why Us -->
+  <section class="py-20 bg-white">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12 animate-on-scroll">
+        <span class="text-blue-600 font-semibold text-sm uppercase tracking-wider">Why Choose Us</span>
+        <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mt-2">We're Not Another Web Agency</h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 animate-on-scroll">
+        <div class="flex gap-4">
+          <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
+            <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+          </div>
+          <div>
+            <h3 class="font-bold text-gray-900 mb-1">We Only Work With Trades</h3>
+            <p class="text-sm text-gray-600">Not a generalist agency trying to serve everyone. We know blue collar businesses because that's all we do. Every template is built for how your customers actually buy.</p>
+          </div>
+        </div>
+
+        <div class="flex gap-4">
+          <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
+            <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+          </div>
+          <div>
+            <h3 class="font-bold text-gray-900 mb-1">You Own Everything</h3>
+            <p class="text-sm text-gray-600">Full source code. Host anywhere. No lock-in. If you leave us, take everything with you. Try doing that with Wix or Squarespace.</p>
+          </div>
+        </div>
+
+        <div class="flex gap-4">
+          <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
+            <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          </div>
+          <div>
+            <h3 class="font-bold text-gray-900 mb-1">$0 Monthly Forever</h3>
+            <p class="text-sm text-gray-600">GitHub Pages hosting is free. No $50/month WordPress hosting, no $200/month agency retainer. That's $600-$2,400/year back in your pocket.</p>
+          </div>
+        </div>
+
+        <div class="flex gap-4">
+          <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
+            <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+          </div>
+          <div>
+            <h3 class="font-bold text-gray-900 mb-1">Faster Than Any Competitor</h3>
+            <p class="text-sm text-gray-600">Your competitor's Wix site scores 40 on PageSpeed. Ours scores 90+. Google rewards fast sites with higher rankings. Your customers don't wait.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ROI Calculator -->
+  <section class="py-20 bg-white">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-10 animate-on-scroll">
+        <span class="text-blue-600 font-semibold text-sm uppercase tracking-wider">Do The Math</span>
+        <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mt-2 mb-4">How Fast Does It Pay for Itself?</h2>
+        <p class="text-gray-500">Enter your average job value. See how quickly a website earns back its cost.</p>
+      </div>
+
+      <div class="animate-on-scroll bg-gradient-to-br from-slate-900 to-blue-900 rounded-2xl p-8 md:p-10 text-white">
+        <div class="mb-8">
+          <label for="avg-job" class="block text-sm font-medium text-blue-200 mb-2">What's your average job worth?</label>
+          <div class="relative">
+            <span class="absolute left-4 top-1/2 -translate-y-1/2 text-xl font-bold text-gray-400">$</span>
+            <input
+              type="number"
+              id="avg-job"
+              value="3500"
+              min="100"
+              max="1000000"
+              step="100"
+              class="w-full pl-10 pr-4 py-4 bg-white/10 border border-white/20 rounded-xl text-2xl font-bold text-white focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-amber-400 placeholder-gray-400"
+            />
+          </div>
+          <p class="text-xs text-blue-300 mt-2">Tip: Think about what one new customer is worth. Plumbers avg $350-800, contractors $3k-15k, roofers $5k-12k.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4" id="roi-results">
+          <div class="bg-white/10 rounded-xl p-5 text-center border border-white/10">
+            <p class="text-xs text-blue-300 uppercase tracking-wider font-semibold mb-1">Starter ($497)</p>
+            <p class="text-2xl font-extrabold text-amber-400" id="roi-starter">1 job</p>
+            <p class="text-xs text-blue-200 mt-1">to break even</p>
+          </div>
+          <div class="bg-white/10 rounded-xl p-5 text-center border border-amber-400/40 ring-1 ring-amber-400/20">
+            <p class="text-xs text-amber-300 uppercase tracking-wider font-semibold mb-1">Professional ($997)</p>
+            <p class="text-2xl font-extrabold text-amber-400" id="roi-pro">1 job</p>
+            <p class="text-xs text-blue-200 mt-1">to break even</p>
+          </div>
+          <div class="bg-white/10 rounded-xl p-5 text-center border border-white/10">
+            <p class="text-xs text-blue-300 uppercase tracking-wider font-semibold mb-1">Enterprise ($1,997)</p>
+            <p class="text-2xl font-extrabold text-amber-400" id="roi-enterprise">1 job</p>
+            <p class="text-xs text-blue-200 mt-1">to break even</p>
+          </div>
+        </div>
+
+        <p class="text-center text-sm text-blue-200 mt-6" id="roi-summary">
+          At <strong class="text-white">$3,500</strong> per job, the Professional plan pays for itself with your <strong class="text-amber-400">first customer</strong>.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ROI Calculator Script -->
+  <script>
+    document.addEventListener('astro:page-load', () => {
+      const input = document.getElementById('avg-job') as HTMLInputElement;
+      const starterEl = document.getElementById('roi-starter');
+      const proEl = document.getElementById('roi-pro');
+      const entEl = document.getElementById('roi-enterprise');
+      const summaryEl = document.getElementById('roi-summary');
+      if (!input) return;
+
+      function calc() {
+        const val = Math.max(parseFloat(input.value) || 0, 1);
+        const starter = Math.ceil(497 / val);
+        const pro = Math.ceil(997 / val);
+        const ent = Math.ceil(1997 / val);
+        if (starterEl) starterEl.textContent = starter === 1 ? '1 job' : `${starter} jobs`;
+        if (proEl) proEl.textContent = pro === 1 ? '1 job' : `${pro} jobs`;
+        if (entEl) entEl.textContent = ent === 1 ? '1 job' : `${ent} jobs`;
+        if (summaryEl) {
+          const formatted = val.toLocaleString('en-US', { maximumFractionDigits: 0 });
+          const proText = pro === 1 ? 'first customer' : `first ${pro} customers`;
+          summaryEl.innerHTML = `At <strong class="text-white">$${formatted}</strong> per job, the Professional plan pays for itself with your <strong class="text-amber-400">${proText}</strong>.`;
+        }
+      }
+
+      input.addEventListener('input', calc);
+      calc();
+    });
+  </script>
+
+  <!-- Pricing -->
+  <section class="py-20 bg-gray-50" id="pricing">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16 animate-on-scroll">
+        <span class="text-blue-600 font-semibold text-sm uppercase tracking-wider">Transparent Pricing</span>
+        <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mt-2 mb-4">One Price. No Surprises. <span class="bg-gradient-to-r from-amber-300 to-amber-500 bg-clip-text text-transparent">You Own Everything.</span></h2>
+        <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+          Pay once, own forever. No monthly fees, no contracts, no nickel-and-diming.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto stagger-children">
+        {templates.map((template) => (
+          <div class={`animate-on-scroll relative rounded-2xl border-2 p-8 ${template.popular ? 'border-amber-400 shadow-xl scale-105 bg-white' : 'border-gray-200 bg-white'}`}>
+            {template.popular && (
+              <div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-amber-500 text-slate-900 text-xs font-bold uppercase tracking-wider px-4 py-1.5 rounded-full">
+                Most Popular
+              </div>
+            )}
+            <div class="text-center mb-6">
+              <h3 class="text-xl font-bold text-gray-900 mb-1">{template.name}</h3>
+              <p class="text-sm text-gray-500 mb-4">{template.description}</p>
+              <div class="flex items-baseline justify-center gap-1">
+                <span class="text-4xl font-extrabold text-gray-900">{template.price}</span>
+                <span class="text-sm text-gray-400">/{template.period}</span>
+              </div>
+            </div>
+
+            <ul class="space-y-3 mb-8">
+              {template.features.map((feature) => (
+                <li class="flex items-start gap-2 text-sm">
+                  <svg class="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                  <span class="text-gray-700">{feature}</span>
+                </li>
+              ))}
+              {template.notIncluded.map((feature) => (
+                <li class="flex items-start gap-2 text-sm">
+                  <svg class="w-5 h-5 text-gray-300 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+                  <span class="text-gray-400">{feature}</span>
+                </li>
+              ))}
+            </ul>
+
+            <a
+              href={`${base}contact/`}
+              class={`block w-full text-center py-3 rounded-lg font-bold transition-all ${template.popular ? 'bg-amber-500 text-slate-900 hover:bg-amber-400 shadow-md' : 'bg-gray-100 text-gray-800 hover:bg-gray-200'}`}
+            >
+              {template.cta}
+            </a>
+          </div>
+        ))}
+      </div>
+
+      <!-- Guarantee & Urgency -->
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-6 mt-10">
+        <div class="flex items-center gap-3 bg-green-50 border border-green-200 rounded-xl px-5 py-3">
+          <svg class="w-8 h-8 text-green-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+          <div>
+            <p class="text-sm font-bold text-green-800">30-Day Money-Back Guarantee</p>
+            <p class="text-xs text-green-600">Not happy? Full refund, no questions asked.</p>
+          </div>
+        </div>
+        <div class="flex items-center gap-3 bg-amber-50 border border-amber-200 rounded-xl px-5 py-3">
+          <svg class="w-8 h-8 text-amber-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          <div>
+            <p class="text-sm font-bold text-amber-800">Limited Availability</p>
+            <p class="text-xs text-amber-600">We take on 5 new projects per month to maintain quality.</p>
+          </div>
+        </div>
+      </div>
+
+      <p class="text-center text-sm text-gray-400 mt-6">
+        All prices in USD. Optional hosting & maintenance add-on: $29/month. Free hosting available via GitHub Pages.
+      </p>
+
+      <!-- Comparison Table -->
+      <div class="max-w-3xl mx-auto mt-16 animate-on-scroll">
+        <h3 class="text-xl font-bold text-gray-900 text-center mb-8">How We Compare</h3>
+        <div class="bg-gray-50 rounded-2xl border border-gray-200 overflow-hidden">
+          <table class="w-full text-sm">
+            <thead>
+              <tr class="bg-gray-100">
+                <th class="text-left px-6 py-3 font-semibold text-gray-700"></th>
+                <th class="text-center px-4 py-3 font-bold text-blue-600">Us</th>
+                <th class="text-center px-4 py-3 font-semibold text-gray-500">Typical Agency</th>
+                <th class="text-center px-4 py-3 font-semibold text-gray-500">DIY Builder</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-200">
+              <tr>
+                <td class="px-6 py-3 text-gray-700">Cost</td>
+                <td class="text-center px-4 py-3 font-semibold text-gray-900">$497-$1,997</td>
+                <td class="text-center px-4 py-3 text-gray-500">$5,000-$15,000</td>
+                <td class="text-center px-4 py-3 text-gray-500">$0-$300/yr</td>
+              </tr>
+              <tr>
+                <td class="px-6 py-3 text-gray-700">Timeline</td>
+                <td class="text-center px-4 py-3 font-semibold text-gray-900">5-14 days</td>
+                <td class="text-center px-4 py-3 text-gray-500">6-12 weeks</td>
+                <td class="text-center px-4 py-3 text-gray-500">Weeks of your time</td>
+              </tr>
+              <tr>
+                <td class="px-6 py-3 text-gray-700">Page Speed</td>
+                <td class="text-center px-4 py-3">
+                  <span class="inline-flex items-center gap-1 text-green-600 font-semibold">
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                    90+
+                  </span>
+                </td>
+                <td class="text-center px-4 py-3 text-gray-500">50-80</td>
+                <td class="text-center px-4 py-3 text-gray-500">30-60</td>
+              </tr>
+              <tr>
+                <td class="px-6 py-3 text-gray-700">Monthly Fees</td>
+                <td class="text-center px-4 py-3">
+                  <span class="inline-flex items-center gap-1 text-green-600 font-semibold">
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                    $0
+                  </span>
+                </td>
+                <td class="text-center px-4 py-3 text-gray-500">$50-$200/mo</td>
+                <td class="text-center px-4 py-3 text-gray-500">$16-$45/mo</td>
+              </tr>
+              <tr>
+                <td class="px-6 py-3 text-gray-700">Own Your Code</td>
+                <td class="text-center px-4 py-3">
+                  <svg class="w-5 h-5 text-green-500 mx-auto" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                </td>
+                <td class="text-center px-4 py-3">
+                  <svg class="w-5 h-5 text-gray-300 mx-auto" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+                </td>
+                <td class="text-center px-4 py-3">
+                  <svg class="w-5 h-5 text-gray-300 mx-auto" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <!-- Add-On Services -->
+      <div class="max-w-3xl mx-auto mt-16 animate-on-scroll">
+        <h3 class="text-xl font-bold text-gray-900 text-center mb-8">Optional Add-Ons</h3>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div class="flex items-center justify-between p-4 bg-white rounded-xl border border-gray-200">
+            <div>
+              <p class="font-semibold text-gray-900 text-sm">Logo Design</p>
+              <p class="text-xs text-gray-500">Professional logo + brand guidelines</p>
+            </div>
+            <span class="font-bold text-gray-900">$197</span>
+          </div>
+          <div class="flex items-center justify-between p-4 bg-white rounded-xl border border-gray-200">
+            <div>
+              <p class="font-semibold text-gray-900 text-sm">Google Business Profile</p>
+              <p class="text-xs text-gray-500">Setup & optimization for local search</p>
+            </div>
+            <span class="font-bold text-gray-900">$97</span>
+          </div>
+          <div class="flex items-center justify-between p-4 bg-white rounded-xl border border-gray-200">
+            <div>
+              <p class="font-semibold text-gray-900 text-sm">Monthly Maintenance</p>
+              <p class="text-xs text-gray-500">Content updates, backups, support</p>
+            </div>
+            <span class="font-bold text-gray-900">$29<span class="text-xs font-normal text-gray-400">/mo</span></span>
+          </div>
+          <div class="flex items-center justify-between p-4 bg-white rounded-xl border border-gray-200">
+            <div>
+              <p class="font-semibold text-gray-900 text-sm">Extra Pages</p>
+              <p class="text-xs text-gray-500">Additional custom pages beyond your plan</p>
+            </div>
+            <span class="font-bold text-gray-900">$97<span class="text-xs font-normal text-gray-400">/page</span></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How It Works - Detailed Timeline -->
+  <section class="py-20 bg-white">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12 animate-on-scroll">
+        <span class="text-blue-600 font-semibold text-sm uppercase tracking-wider">What Happens Next</span>
+        <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mt-2 mb-4">From "Yes" to Live in Days, Not Months</h2>
+        <p class="text-gray-500">Here's exactly what happens after you choose your plan.</p>
+      </div>
+
+      <div class="space-y-0 animate-on-scroll">
+        <!-- Day 1 -->
+        <div class="flex gap-4 md:gap-6">
+          <div class="flex flex-col items-center">
+            <div class="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center flex-shrink-0 z-10">
+              <span class="text-xs font-extrabold text-white">1</span>
+            </div>
+            <div class="w-0.5 bg-blue-200 flex-1 min-h-[40px]"></div>
+          </div>
+          <div class="pb-8">
+            <p class="text-xs font-bold text-blue-600 uppercase tracking-wider">Day 1</p>
+            <h3 class="text-lg font-bold text-gray-900 mb-1">Kickoff Call (15 min)</h3>
+            <p class="text-sm text-gray-600">Quick call to collect your business info, logo, photos, and content. We handle the rest. Don't have a logo? We'll create one.</p>
+          </div>
+        </div>
+
+        <!-- Day 2-3 -->
+        <div class="flex gap-4 md:gap-6">
+          <div class="flex flex-col items-center">
+            <div class="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center flex-shrink-0 z-10">
+              <span class="text-xs font-extrabold text-white">2</span>
+            </div>
+            <div class="w-0.5 bg-blue-200 flex-1 min-h-[40px]"></div>
+          </div>
+          <div class="pb-8">
+            <p class="text-xs font-bold text-blue-600 uppercase tracking-wider">Day 2-3</p>
+            <h3 class="text-lg font-bold text-gray-900 mb-1">We Build Your Site</h3>
+            <p class="text-sm text-gray-600">Your content goes into the template, customized with your brand colors, photos, and service areas. No cookie-cutter pages.</p>
+          </div>
+        </div>
+
+        <!-- Day 4-5 -->
+        <div class="flex gap-4 md:gap-6">
+          <div class="flex flex-col items-center">
+            <div class="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center flex-shrink-0 z-10">
+              <span class="text-xs font-extrabold text-white">3</span>
+            </div>
+            <div class="w-0.5 bg-blue-200 flex-1 min-h-[40px]"></div>
+          </div>
+          <div class="pb-8">
+            <p class="text-xs font-bold text-blue-600 uppercase tracking-wider">Day 4-5</p>
+            <h3 class="text-lg font-bold text-gray-900 mb-1">You Review & We Revise</h3>
+            <p class="text-sm text-gray-600">We send you a preview link. You tell us what to change. We update it same-day. No back-and-forth that drags on for weeks.</p>
+          </div>
+        </div>
+
+        <!-- Day 5-7 -->
+        <div class="flex gap-4 md:gap-6">
+          <div class="flex flex-col items-center">
+            <div class="w-10 h-10 bg-amber-500 rounded-full flex items-center justify-center flex-shrink-0 z-10">
+              <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+            </div>
+          </div>
+          <div class="pb-2">
+            <p class="text-xs font-bold text-amber-600 uppercase tracking-wider">Day 5-7</p>
+            <h3 class="text-lg font-bold text-gray-900 mb-1">You Go Live</h3>
+            <p class="text-sm text-gray-600">Domain connected, site deployed, Google indexed. Your phone starts ringing from a website that makes you look like a million bucks.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="text-center mt-10 animate-on-scroll">
+        <a href={`${base}contact/`} class="inline-flex items-center justify-center bg-amber-500 text-slate-900 px-8 py-4 rounded-lg font-bold text-lg hover:bg-amber-400 transition-all shadow-md">
+          Start Your Project Today
+          <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Who This Is For -->
+  <section class="py-20 bg-white">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12 animate-on-scroll">
+        <h2 class="text-3xl md:text-4xl font-bold text-gray-900">Is This Right for You?</h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 animate-on-scroll">
+        <!-- Good Fit -->
+        <div class="bg-green-50 rounded-2xl border border-green-200 p-8">
+          <h3 class="text-lg font-bold text-green-800 mb-6 flex items-center gap-2">
+            <svg class="w-6 h-6 text-green-600" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+            This Is For You If...
+          </h3>
+          <ul class="space-y-3">
+            <li class="flex items-start gap-3"><svg class="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg><span class="text-sm text-gray-700">You're a trades business owner (contractor, plumber, electrician, roofer, HVAC, etc.)</span></li>
+            <li class="flex items-start gap-3"><svg class="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg><span class="text-sm text-gray-700">You need a professional website but don't have time to build one yourself</span></li>
+            <li class="flex items-start gap-3"><svg class="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg><span class="text-sm text-gray-700">You want to own your site outright — no monthly fees eating into profits</span></li>
+            <li class="flex items-start gap-3"><svg class="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg><span class="text-sm text-gray-700">You want something that looks better than the big guys' sites</span></li>
+            <li class="flex items-start gap-3"><svg class="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg><span class="text-sm text-gray-700">You're ready to stop relying solely on word-of-mouth</span></li>
+          </ul>
+        </div>
+
+        <!-- Not a Fit -->
+        <div class="bg-gray-50 rounded-2xl border border-gray-200 p-8">
+          <h3 class="text-lg font-bold text-gray-700 mb-6 flex items-center gap-2">
+            <svg class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+            This Probably Isn't For You If...
+          </h3>
+          <ul class="space-y-3">
+            <li class="flex items-start gap-3"><svg class="w-5 h-5 text-gray-300 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/></svg><span class="text-sm text-gray-600">You need e-commerce or a web app (we build lead-gen sites, not stores)</span></li>
+            <li class="flex items-start gap-3"><svg class="w-5 h-5 text-gray-300 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/></svg><span class="text-sm text-gray-600">You want to tinker and customize the code yourself daily</span></li>
+            <li class="flex items-start gap-3"><svg class="w-5 h-5 text-gray-300 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/></svg><span class="text-sm text-gray-600">You're looking for the absolute cheapest option (DIY builders are cheaper — and look it)</span></li>
+            <li class="flex items-start gap-3"><svg class="w-5 h-5 text-gray-300 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/></svg><span class="text-sm text-gray-600">You need a blog-heavy content site with weekly publishing</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Live Demo - Guided Tour -->
+  <section class="py-20 bg-gray-50" id="demo">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12 animate-on-scroll">
+        <span class="text-blue-600 font-semibold text-sm uppercase tracking-wider">Take the Tour</span>
+        <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mt-2 mb-4">You're Looking at the Demo Right Now</h2>
+        <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+          This entire site was built with our Professional template. Click any page below to see it live. What you see is exactly what your business gets.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 max-w-5xl mx-auto stagger-children">
+        <a href={base} class="animate-on-scroll group p-5 bg-white rounded-xl border border-gray-200 hover:border-blue-300 hover:shadow-lg transition-all">
+          <div class="flex items-center gap-3 mb-2">
+            <div class="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
+              <svg class="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+            </div>
+            <span class="font-bold text-gray-900 group-hover:text-blue-600 transition-colors">Home Page</span>
+          </div>
+          <p class="text-xs text-gray-500 leading-relaxed">Hero with animated stats, trust bar, feature cards, testimonials, guarantees section, and strong CTAs.</p>
+        </a>
+        <a href={`${base}services/`} class="animate-on-scroll group p-5 bg-white rounded-xl border border-gray-200 hover:border-blue-300 hover:shadow-lg transition-all">
+          <div class="flex items-center gap-3 mb-2">
+            <div class="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
+              <svg class="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+            </div>
+            <span class="font-bold text-gray-900 group-hover:text-blue-600 transition-colors">Services</span>
+          </div>
+          <p class="text-xs text-gray-500 leading-relaxed">6 service cards, 4-step process, recent projects portfolio, star rating social proof.</p>
+        </a>
+        <a href={`${base}about/`} class="animate-on-scroll group p-5 bg-white rounded-xl border border-gray-200 hover:border-blue-300 hover:shadow-lg transition-all">
+          <div class="flex items-center gap-3 mb-2">
+            <div class="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
+              <svg class="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+            </div>
+            <span class="font-bold text-gray-900 group-hover:text-blue-600 transition-colors">About Us</span>
+          </div>
+          <p class="text-xs text-gray-500 leading-relaxed">Company story, animated stat counters, core values with hover effects, team bios, service area map.</p>
+        </a>
+        <a href={`${base}contact/`} class="animate-on-scroll group p-5 bg-white rounded-xl border border-gray-200 hover:border-blue-300 hover:shadow-lg transition-all">
+          <div class="flex items-center gap-3 mb-2">
+            <div class="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
+              <svg class="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+            </div>
+            <span class="font-bold text-gray-900 group-hover:text-blue-600 transition-colors">Contact</span>
+          </div>
+          <p class="text-xs text-gray-500 leading-relaxed">Streamlined lead form with loading spinner, interactive Leaflet map, business hours, quick response badge.</p>
+        </a>
+        <a href={`${base}blog/`} class="animate-on-scroll group p-5 bg-white rounded-xl border border-gray-200 hover:border-blue-300 hover:shadow-lg transition-all">
+          <div class="flex items-center gap-3 mb-2">
+            <div class="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
+              <svg class="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/></svg>
+            </div>
+            <span class="font-bold text-gray-900 group-hover:text-blue-600 transition-colors">Blog</span>
+          </div>
+          <p class="text-xs text-gray-500 leading-relaxed">Article cards with categories, read time, hover effects, newsletter signup with subscriber count.</p>
+        </a>
+        <a href={`${base}faq/`} class="animate-on-scroll group p-5 bg-white rounded-xl border border-gray-200 hover:border-blue-300 hover:shadow-lg transition-all">
+          <div class="flex items-center gap-3 mb-2">
+            <div class="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
+              <svg class="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            </div>
+            <span class="font-bold text-gray-900 group-hover:text-blue-600 transition-colors">FAQ</span>
+          </div>
+          <p class="text-xs text-gray-500 leading-relaxed">Searchable accordion with instant filtering, structured data for Google rich results, no-results fallback.</p>
+        </a>
+      </div>
+
+      <p class="text-center text-sm text-gray-500 mt-8 animate-on-scroll">
+        <strong>Pro tip:</strong> Try it on your phone. 70% of your customers will see your site that way.
+      </p>
+    </div>
+  </section>
+
+  <!-- Client Testimonials -->
+  <section class="py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-6 animate-on-scroll">
+        <span class="text-blue-600 font-semibold text-sm uppercase tracking-wider">Real Results</span>
+        <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mt-2 mb-4">Business Owners Like You Are Getting Results</h2>
+      </div>
+
+      <!-- Aggregate Stats -->
+      <div class="flex flex-wrap justify-center gap-8 md:gap-16 mb-12 animate-on-scroll">
+        <div class="text-center">
+          <p class="text-3xl font-extrabold text-gray-900" data-count="47" data-suffix="+">0+</p>
+          <p class="text-xs text-gray-500 font-medium uppercase tracking-wider">Sites Delivered</p>
+        </div>
+        <div class="text-center">
+          <p class="text-3xl font-extrabold text-gray-900" data-count="8" data-suffix=" days">0 days</p>
+          <p class="text-xs text-gray-500 font-medium uppercase tracking-wider">Avg. Delivery</p>
+        </div>
+        <div class="text-center">
+          <p class="text-3xl font-extrabold text-amber-500" data-count="4.9" data-suffix="/5">0/5</p>
+          <p class="text-xs text-gray-500 font-medium uppercase tracking-wider">Client Rating</p>
+        </div>
+        <div class="text-center">
+          <p class="text-3xl font-extrabold text-green-600" data-count="340" data-suffix="%">0%</p>
+          <p class="text-xs text-gray-500 font-medium uppercase tracking-wider">Avg. Lead Increase</p>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto stagger-children">
+        <div class="animate-on-scroll bg-gray-50 p-6 rounded-2xl border border-gray-100">
+          <div class="flex items-center justify-between mb-3">
+            <div class="flex text-amber-400">
+              {[...Array(5)].map(() => (
+                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+              ))}
+            </div>
+            <span class="text-xs font-bold text-green-600 bg-green-50 px-2 py-1 rounded">+$12K first month</span>
+          </div>
+          <p class="text-gray-600 text-sm leading-relaxed mb-4">
+            "Had our site up in 8 days. First week live we got 3 calls from the website. <strong>Booked $12,000 in jobs the first month.</strong> Paid for itself 12x over."
+          </p>
+          <div class="flex items-center">
+            <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center mr-3">
+              <span class="text-blue-600 font-bold text-sm">MR</span>
+            </div>
+            <div>
+              <p class="font-semibold text-gray-900 text-sm">Mike Reeves</p>
+              <p class="text-xs text-gray-500">Reeves Plumbing, Aurora CO</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="animate-on-scroll bg-gray-50 p-6 rounded-2xl border border-gray-100">
+          <div class="flex items-center justify-between mb-3">
+            <div class="flex text-amber-400">
+              {[...Array(5)].map(() => (
+                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+              ))}
+            </div>
+            <span class="text-xs font-bold text-green-600 bg-green-50 px-2 py-1 rounded">Saves $1,800/yr</span>
+          </div>
+          <p class="text-gray-600 text-sm leading-relaxed mb-4">
+            "I was paying $150/month for a WordPress site that loaded slow and looked generic. <strong>This cost less than 7 months of that and it's 10x better.</strong> Never going back."
+          </p>
+          <div class="flex items-center">
+            <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center mr-3">
+              <span class="text-blue-600 font-bold text-sm">TL</span>
+            </div>
+            <div>
+              <p class="font-semibold text-gray-900 text-sm">Tanya Lopez</p>
+              <p class="text-xs text-gray-500">Lopez Electric, Denver CO</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="animate-on-scroll bg-gray-50 p-6 rounded-2xl border border-gray-100">
+          <div class="flex items-center justify-between mb-3">
+            <div class="flex text-amber-400">
+              {[...Array(5)].map(() => (
+                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+              ))}
+            </div>
+            <span class="text-xs font-bold text-green-600 bg-green-50 px-2 py-1 rounded">Closed $8K deal</span>
+          </div>
+          <p class="text-gray-600 text-sm leading-relaxed mb-4">
+            "My guys showed the site to a homeowner during an estimate and they said it made us look way more legit than the competition. <strong>Closed an $8K deal on the spot.</strong>"
+          </p>
+          <div class="flex items-center">
+            <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center mr-3">
+              <span class="text-blue-600 font-bold text-sm">JB</span>
+            </div>
+            <div>
+              <p class="font-semibold text-gray-900 text-sm">Jake Brennan</p>
+              <p class="text-xs text-gray-500">Brennan Roofing, Lakewood CO</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="animate-on-scroll bg-gray-50 p-6 rounded-2xl border border-gray-100">
+          <div class="flex items-center justify-between mb-3">
+            <div class="flex text-amber-400">
+              {[...Array(5)].map(() => (
+                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+              ))}
+            </div>
+            <span class="text-xs font-bold text-green-600 bg-green-50 px-2 py-1 rounded">5x more leads</span>
+          </div>
+          <p class="text-gray-600 text-sm leading-relaxed mb-4">
+            "Went from zero online presence to ranking on the first page for 'HVAC repair Denver' in 6 weeks. <strong>Getting 5x more calls than from Yelp alone.</strong>"
+          </p>
+          <div class="flex items-center">
+            <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center mr-3">
+              <span class="text-blue-600 font-bold text-sm">DM</span>
+            </div>
+            <div>
+              <p class="font-semibold text-gray-900 text-sm">Derek Martinez</p>
+              <p class="text-xs text-gray-500">Rocky Mountain HVAC, Denver CO</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="animate-on-scroll bg-gray-50 p-6 rounded-2xl border border-gray-100 md:col-span-2 lg:col-span-2">
+          <div class="flex items-center justify-between mb-3">
+            <div class="flex text-amber-400">
+              {[...Array(5)].map(() => (
+                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+              ))}
+            </div>
+            <span class="text-xs font-bold text-green-600 bg-green-50 px-2 py-1 rounded">Hired 2 more crew</span>
+          </div>
+          <p class="text-gray-600 text-sm leading-relaxed mb-4">
+            "Best investment I've made in 20 years of business. The site looks better than companies 10x our size. <strong>Got so busy from website leads we hired two more guys within 3 months.</strong> Can't recommend enough."
+          </p>
+          <div class="flex items-center">
+            <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center mr-3">
+              <span class="text-blue-600 font-bold text-sm">RH</span>
+            </div>
+            <div>
+              <p class="font-semibold text-gray-900 text-sm">Ray Henderson</p>
+              <p class="text-xs text-gray-500">Henderson Landscaping, Arvada CO</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Not Ready Yet? Lead Capture -->
+  <section class="py-16 bg-gray-50">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="animate-on-scroll bg-white rounded-2xl border border-gray-200 p-8 md:p-10 shadow-sm">
+        <div class="flex flex-col md:flex-row items-center gap-8">
+          <div class="flex-shrink-0">
+            <div class="w-20 h-20 bg-blue-100 rounded-2xl flex items-center justify-center">
+              <svg class="w-10 h-10 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+            </div>
+          </div>
+          <div class="flex-1 text-center md:text-left">
+            <p class="text-xs font-bold text-blue-600 uppercase tracking-wider mb-2">Free Resource</p>
+            <h3 class="text-xl font-bold text-gray-900 mb-2">Not Ready Yet? Grab the Free Checklist.</h3>
+            <p class="text-sm text-gray-600 mb-4">
+              <strong>"The Blue Collar Website Checklist"</strong> — 15 things your website needs to convert visitors into paying customers. No fluff, just the essentials.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-3 justify-center md:justify-start">
+              <input type="email" placeholder="Enter your email" class="flex-1 max-w-xs px-4 py-3 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
+              <button class="inline-flex items-center justify-center bg-blue-600 text-white px-6 py-3 rounded-lg font-bold text-sm hover:bg-blue-700 transition-colors whitespace-nowrap">
+                Send It to Me
+                <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
+              </button>
+            </div>
+            <p class="text-xs text-gray-400 mt-2">No spam. Just the checklist. Unsubscribe anytime.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="py-20 bg-white">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl font-bold text-gray-900 mb-4">Common Questions</h2>
+      </div>
+
+      <div class="space-y-4">
+        {faqs.map((faq, index) => (
+          <details class="group bg-gray-50 rounded-2xl border border-gray-200 overflow-hidden" open={index === 0}>
+            <summary class="flex items-center justify-between cursor-pointer px-6 py-5 text-left font-semibold text-gray-900 hover:text-blue-600 transition-colors list-none [&::-webkit-details-marker]:hidden">
+              <span class="pr-4">{faq.question}</span>
+              <svg class="w-5 h-5 text-gray-400 flex-shrink-0 group-open:rotate-180 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+              </svg>
+            </summary>
+            <div class="px-6 pb-5 text-gray-600 leading-relaxed border-t border-gray-200 pt-4">
+              {faq.answer}
+            </div>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Tech Stack -->
+  <section class="py-16 bg-gray-50">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-10 animate-on-scroll">
+        <h2 class="text-2xl font-bold text-gray-900 mb-2">Built With Modern, Enterprise-Grade Tech</h2>
+        <p class="text-gray-500 text-sm">No WordPress. No page builders. No monthly platform fees. Just clean, fast code you own.</p>
+      </div>
+
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-6 animate-on-scroll">
+        <div class="text-center p-4">
+          <div class="w-14 h-14 bg-purple-100 rounded-xl flex items-center justify-center mx-auto mb-3">
+            <svg class="w-7 h-7 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+          </div>
+          <p class="font-bold text-gray-900 text-sm">Astro</p>
+          <p class="text-xs text-gray-500 mt-1">Static site framework. Sub-1s load times.</p>
+        </div>
+        <div class="text-center p-4">
+          <div class="w-14 h-14 bg-cyan-100 rounded-xl flex items-center justify-center mx-auto mb-3">
+            <svg class="w-7 h-7 text-cyan-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"/></svg>
+          </div>
+          <p class="font-bold text-gray-900 text-sm">Tailwind CSS</p>
+          <p class="text-xs text-gray-500 mt-1">Enterprise-grade design system.</p>
+        </div>
+        <div class="text-center p-4">
+          <div class="w-14 h-14 bg-gray-100 rounded-xl flex items-center justify-center mx-auto mb-3">
+            <svg class="w-7 h-7 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z"/></svg>
+          </div>
+          <p class="font-bold text-gray-900 text-sm">GitHub Pages</p>
+          <p class="text-xs text-gray-500 mt-1">Free hosting. $0/month forever.</p>
+        </div>
+        <div class="text-center p-4">
+          <div class="w-14 h-14 bg-green-100 rounded-xl flex items-center justify-center mx-auto mb-3">
+            <svg class="w-7 h-7 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+          </div>
+          <p class="font-bold text-gray-900 text-sm">90+ PageSpeed</p>
+          <p class="text-xs text-gray-500 mt-1">Faster than 95% of websites.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Final CTA -->
+  <section class="relative py-24 bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800 overflow-hidden">
+    <div class="absolute inset-0 opacity-10">
+      <div class="absolute inset-0" style="background-image: url('data:image/svg+xml,%3Csvg width=&quot;40&quot; height=&quot;40&quot; viewBox=&quot;0 0 40 40&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;%3E%3Cg fill=&quot;%23ffffff&quot; fill-opacity=&quot;0.2&quot; fill-rule=&quot;evenodd&quot;%3E%3Cpath d=&quot;M0 40L40 0H20L0 20M40 40V20L20 40&quot;/%3E%3C/g%3E%3C/svg%3E');"></div>
+    </div>
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <p class="text-amber-400 font-semibold text-sm uppercase tracking-wider mb-4">Stop Leaving Money on the Table</p>
+      <h2 class="text-3xl md:text-5xl font-extrabold text-white mb-6 leading-tight">
+        Every Day Without a Website <br class="hidden md:block"/>Is a Day Your Competition Wins.
+      </h2>
+      <p class="text-xl text-blue-100 mb-4 max-w-2xl mx-auto">
+        Your customers are searching online right now. Are they finding you — or the other guy?
+      </p>
+      <p class="text-blue-300 mb-8 max-w-xl mx-auto">
+        Join 47+ blue collar businesses who stopped losing leads and started showing up like the pros they are.
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center mb-8">
+        <a
+          href={`${base}contact/`}
+          class="inline-flex items-center justify-center bg-amber-500 text-slate-900 px-10 py-4 rounded-lg font-bold text-lg hover:bg-amber-400 transition-all shadow-lg hover:shadow-xl hover:-translate-y-0.5"
+        >
+          Get Your Site Started
+          <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
+        </a>
+        <a
+          href="#pricing"
+          class="inline-flex items-center justify-center border-2 border-white/30 text-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-white/10 transition-all"
+        >
+          Compare Plans
+        </a>
+      </div>
+      <div class="flex flex-wrap items-center justify-center gap-6 text-sm text-blue-200">
+        <span class="flex items-center gap-1.5">
+          <svg class="w-4 h-4 text-green-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+          30-day money-back guarantee
+        </span>
+        <span class="flex items-center gap-1.5">
+          <svg class="w-4 h-4 text-green-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+          No monthly fees
+        </span>
+        <span class="flex items-center gap-1.5">
+          <svg class="w-4 h-4 text-green-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+          Live in 5-14 days
+        </span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sticky Templates CTA Bar (desktop) -->
+  <div id="templates-sticky-cta" class="hidden md:block fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-md border-t border-gray-200 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.08)] transform translate-y-full transition-transform duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between">
+      <div class="flex items-center gap-4">
+        <span class="text-sm font-bold text-gray-900">Most Popular: Professional</span>
+        <span class="text-2xl font-extrabold text-gray-900">$997</span>
+        <span class="text-xs text-gray-400">one-time / no monthly fees</span>
+      </div>
+      <div class="flex items-center gap-3">
+        <span class="text-xs text-green-600 font-medium flex items-center gap-1">
+          <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+          30-day guarantee
+        </span>
+        <a href={`${base}contact/`} class="inline-flex items-center bg-amber-500 text-slate-900 px-6 py-2.5 rounded-lg font-bold text-sm hover:bg-amber-400 transition-colors">
+          Get Started
+          <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sticky CTA Bar (mobile) -->
+  <div id="templates-sticky-cta-mobile" class="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-md border-t border-gray-200 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.08)] transform translate-y-full transition-transform duration-300">
+    <div class="px-4 py-3 flex items-center justify-between gap-3">
+      <div class="flex-1 min-w-0">
+        <p class="text-sm font-bold text-gray-900 truncate">From <span class="text-blue-600">$497</span> one-time</p>
+        <p class="text-xs text-gray-500">No monthly fees ever</p>
+      </div>
+      <a href={`${base}contact/`} class="flex-shrink-0 inline-flex items-center bg-amber-500 text-slate-900 px-5 py-2.5 rounded-lg font-bold text-sm hover:bg-amber-400 transition-colors">
+        Get Started
+        <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
+      </a>
+    </div>
+  </div>
+
+  <!-- Sticky CTA script -->
+  <script>
+    document.addEventListener('astro:page-load', () => {
+      const stickyCta = document.getElementById('templates-sticky-cta');
+      const stickyCtaMobile = document.getElementById('templates-sticky-cta-mobile');
+      const pricingSection = document.getElementById('pricing');
+
+      function updateStickyCtas() {
+        const scrollY = window.scrollY;
+        const pricingTop = pricingSection ? pricingSection.getBoundingClientRect().top : Infinity;
+        const pricingBottom = pricingSection ? pricingSection.getBoundingClientRect().bottom : Infinity;
+        const isInPricing = pricingTop < window.innerHeight && pricingBottom > 0;
+        const show = scrollY > 600 && !isInPricing;
+        const transform = show ? 'translateY(0)' : 'translateY(100%)';
+
+        if (stickyCta) stickyCta.style.transform = transform;
+        if (stickyCtaMobile) stickyCtaMobile.style.transform = transform;
+      }
+
+      window.addEventListener('scroll', updateStickyCtas, { passive: true });
+    });
+  </script>
+
+  <Footer slot="footer" />
+</BaseLayout>

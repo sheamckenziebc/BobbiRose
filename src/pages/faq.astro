@@ -1,0 +1,186 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { readFileSync } from 'fs';
+import { join } from 'path';
+import yaml from 'js-yaml';
+
+const configPath = join(process.cwd(), 'config.yaml');
+const config = yaml.load(readFileSync(configPath, 'utf8'));
+const base = import.meta.env.BASE_URL;
+
+const faqs = [
+  {
+    question: "How long does a typical kitchen remodel take?",
+    answer: "Most kitchen remodels take 6-10 weeks from demolition to completion, depending on scope. A cosmetic refresh (new countertops, paint, hardware) can be done in 2-3 weeks. Full gut renovations with layout changes and custom cabinetry typically run 8-12 weeks. We provide a detailed timeline in your estimate."
+  },
+  {
+    question: "Do you handle permits and inspections?",
+    answer: "Yes. We manage the entire permitting process including structural, electrical, plumbing, and mechanical permits. We coordinate all required inspections with the City of Denver or your local jurisdiction. Permit costs are itemized separately in your estimate so there are no surprises."
+  },
+  {
+    question: "What areas do you serve?",
+    answer: "We serve the entire Denver metro area and Front Range communities including Boulder, Lakewood, Highlands Ranch, Arvada, Golden, Littleton, Aurora, and Parker. For projects outside this area, please contact us to discuss availability."
+  },
+  {
+    question: "How do your estimates work?",
+    answer: "After a free in-home consultation, we provide a detailed line-item estimate within 48 hours. Every cost is broken out — materials, labor, permits, and contingency. No hidden fees, no vague allowances. If the scope changes during the project, we provide a written change order before any additional work begins."
+  },
+  {
+    question: "Are you licensed and insured?",
+    answer: "Absolutely. Summit Pro Builders holds a Colorado general contractor license, comprehensive general liability insurance ($2M per occurrence), and full workers' compensation coverage. We're happy to provide certificates of insurance for your records or your HOA."
+  },
+  {
+    question: "Do you offer financing options?",
+    answer: "We don't offer direct financing, but we work with several local lenders who specialize in home improvement loans and HELOCs. We can provide referrals to trusted partners who offer competitive rates for renovation projects."
+  },
+  {
+    question: "What is your warranty policy?",
+    answer: "We provide a 2-year workmanship warranty on all labor and installation. This covers any defects in our work, not normal wear and tear. Additionally, all materials carry their manufacturer's warranty, which we help you register and file claims against if needed."
+  },
+  {
+    question: "Can I live in my home during a renovation?",
+    answer: "In most cases, yes. We set up dust barriers, maintain clean pathways, and coordinate noisy work during reasonable hours. For whole-home renovations or projects affecting kitchens and bathrooms simultaneously, we may recommend temporary arrangements for a portion of the project. We'll discuss this during the planning phase."
+  }
+];
+
+// FAQPage JSON-LD schema
+const faqItems = faqs.map(f => {
+  const item: Record<string, any> = { name: f.question, acceptedAnswer: { text: f.answer } };
+  item["@type"] = "Question";
+  item.acceptedAnswer["@type"] = "Answer";
+  return item;
+});
+const faqObj: Record<string, any> = { mainEntity: faqItems };
+faqObj["@context"] = "https://schema.org";
+faqObj["@type"] = "FAQPage";
+const faqJsonLd = JSON.stringify(faqObj);
+---
+
+<BaseLayout title={`FAQ | ${config.site.title}`} description="Frequently asked questions about Summit Pro Builders' renovation services, pricing, timelines, licensing, and warranty policies.">
+  <Header slot="header" />
+
+  <!-- Hero -->
+  <section class="relative bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800 py-20">
+    <div class="absolute inset-0 opacity-5">
+      <div class="absolute inset-0" style="background-image: url('data:image/svg+xml,%3Csvg width=&quot;60&quot; height=&quot;60&quot; viewBox=&quot;0 0 60 60&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;%3E%3Cg fill=&quot;none&quot; fill-rule=&quot;evenodd&quot;%3E%3Cg fill=&quot;%23ffffff&quot; fill-opacity=&quot;0.15&quot;%3E%3Cpath d=&quot;M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z&quot;/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');"></div>
+    </div>
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <span class="text-amber-400 font-semibold text-sm uppercase tracking-wider">Common Questions</span>
+      <h1 class="text-4xl md:text-5xl font-extrabold text-white mt-2 mb-6">
+        Frequently Asked <span class="text-amber-400">Questions</span>
+      </h1>
+      <p class="text-xl text-blue-100 max-w-3xl mx-auto leading-relaxed">
+        Straight answers to the questions we hear most from Denver homeowners.
+      </p>
+    </div>
+  </section>
+
+  <!-- FAQ Accordion -->
+  <section class="py-20 bg-white">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+      <!-- Search Filter -->
+      <div class="mb-8 animate-on-scroll">
+        <div class="relative">
+          <svg class="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+          <input
+            type="text"
+            id="faq-search"
+            placeholder="Search questions..."
+            class="w-full pl-12 pr-4 py-3.5 border border-gray-300 rounded-xl text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+            autocomplete="off"
+          />
+        </div>
+        <p id="faq-count" class="text-sm text-gray-400 mt-2 hidden"></p>
+      </div>
+
+      <div class="space-y-4 stagger-children" id="faq-list">
+        {faqs.map((faq, index) => (
+          <details class="animate-on-scroll group bg-gray-50 rounded-2xl border border-gray-200 overflow-hidden faq-item" data-question={faq.question.toLowerCase()} data-answer={faq.answer.toLowerCase()} open={index === 0}>
+            <summary class="flex items-center justify-between cursor-pointer px-6 py-5 text-left font-semibold text-gray-900 hover:text-blue-600 transition-colors list-none [&::-webkit-details-marker]:hidden">
+              <span class="pr-4">{faq.question}</span>
+              <svg class="w-5 h-5 text-gray-400 flex-shrink-0 group-open:rotate-180 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+              </svg>
+            </summary>
+            <div class="px-6 pb-5 text-gray-600 leading-relaxed border-t border-gray-200 pt-4">
+              {faq.answer}
+            </div>
+          </details>
+        ))}
+      </div>
+
+      <!-- No results message -->
+      <div id="faq-no-results" class="hidden text-center py-12">
+        <svg class="w-12 h-12 text-gray-300 mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        <p class="text-gray-500 font-medium">No matching questions found</p>
+        <p class="text-gray-400 text-sm mt-1">Try a different search term or <a href={`${base}contact/`} class="text-blue-600 hover:underline">contact us directly</a></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ search script -->
+  <script>
+    document.addEventListener('astro:page-load', () => {
+      const searchInput = document.getElementById('faq-search') as HTMLInputElement;
+      const faqItems = document.querySelectorAll('.faq-item') as NodeListOf<HTMLElement>;
+      const noResults = document.getElementById('faq-no-results');
+      const faqCount = document.getElementById('faq-count');
+      if (!searchInput || !faqItems.length) return;
+
+      searchInput.addEventListener('input', () => {
+        const query = searchInput.value.toLowerCase().trim();
+        let visible = 0;
+
+        faqItems.forEach((item) => {
+          const q = item.dataset.question || '';
+          const a = item.dataset.answer || '';
+          const match = !query || q.includes(query) || a.includes(query);
+          item.style.display = match ? '' : 'none';
+          if (match) visible++;
+        });
+
+        if (noResults) {
+          noResults.classList.toggle('hidden', visible > 0);
+        }
+        if (faqCount) {
+          if (query) {
+            faqCount.textContent = `Showing ${visible} of ${faqItems.length} questions`;
+            faqCount.classList.remove('hidden');
+          } else {
+            faqCount.classList.add('hidden');
+          }
+        }
+      });
+    });
+  </script>
+
+  <!-- Still Have Questions CTA -->
+  <section class="py-16 bg-gray-50">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <h2 class="text-2xl font-bold text-gray-900 mb-4">Still Have Questions?</h2>
+      <p class="text-gray-600 mb-6">
+        We're happy to chat. Reach out by phone or send us a message and we'll get back to you within one business day.
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a
+          href={`${base}contact/`}
+          class="inline-flex items-center justify-center bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
+        >
+          Contact Us
+        </a>
+        <a
+          href={`tel:${config.contact.phone}`}
+          class="inline-flex items-center justify-center border border-gray-300 text-gray-700 px-6 py-3 rounded-lg font-semibold hover:bg-gray-50 transition-colors"
+        >
+          <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+          (720) 555-0193
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <script type="application/ld+json" set:html={faqJsonLd} />
+  <Footer slot="footer" />
+</BaseLayout>

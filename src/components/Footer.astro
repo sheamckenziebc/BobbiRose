@@ -1,0 +1,241 @@
+---
+import { readFileSync } from 'fs';
+import { join } from 'path';
+import yaml from 'js-yaml';
+
+// Load configuration
+const configPath = join(process.cwd(), 'config.yaml');
+const config = yaml.load(readFileSync(configPath, 'utf8'));
+
+const base = import.meta.env.BASE_URL;
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="bg-slate-900 text-white">
+  <!-- Main Footer -->
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+      <!-- Company Info -->
+      <div class="lg:col-span-1">
+        <div class="flex items-center space-x-2 mb-4">
+          <img
+            src={`${base}assets/logo.svg`}
+            alt={`${config.site.title} logo`}
+            class="h-10 w-auto filter brightness-0 invert"
+            width="40"
+            height="40"
+          />
+          <div class="flex flex-col">
+            <span class="text-lg font-extrabold leading-tight">{config.site.title}</span>
+            <span class="text-[10px] text-gray-400 font-medium uppercase tracking-widest">General Contractor</span>
+          </div>
+        </div>
+        <p class="text-gray-400 text-sm leading-relaxed mb-6">
+          Denver's trusted general contractor for kitchen remodels, bathroom renovations, home additions, and whole-home renovations. Licensed, insured, and committed to quality.
+        </p>
+        <!-- Trust Badges -->
+        <div class="flex items-center gap-4">
+          <div class="flex items-center gap-1.5 text-xs text-gray-400 bg-slate-800 px-3 py-1.5 rounded-full">
+            <svg class="w-3.5 h-3.5 text-green-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+            Licensed
+          </div>
+          <div class="flex items-center gap-1.5 text-xs text-gray-400 bg-slate-800 px-3 py-1.5 rounded-full">
+            <svg class="w-3.5 h-3.5 text-blue-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+            Insured
+          </div>
+        </div>
+      </div>
+
+      <!-- Services -->
+      <div>
+        <h3 class="text-sm font-bold uppercase tracking-wider text-gray-300 mb-4">Services</h3>
+        <ul class="space-y-3 text-sm">
+          <li>
+            <a href={`${base}services/`} class="text-gray-400 hover:text-white transition-colors">Kitchen Remodeling</a>
+          </li>
+          <li>
+            <a href={`${base}services/`} class="text-gray-400 hover:text-white transition-colors">Bathroom Renovation</a>
+          </li>
+          <li>
+            <a href={`${base}services/`} class="text-gray-400 hover:text-white transition-colors">Home Additions</a>
+          </li>
+          <li>
+            <a href={`${base}services/`} class="text-gray-400 hover:text-white transition-colors">Basement Finishing</a>
+          </li>
+          <li>
+            <a href={`${base}services/`} class="text-gray-400 hover:text-white transition-colors">Decks & Outdoor Living</a>
+          </li>
+          <li>
+            <a href={`${base}services/`} class="text-gray-400 hover:text-white transition-colors">Whole-Home Renovation</a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Quick Links -->
+      <div>
+        <h3 class="text-sm font-bold uppercase tracking-wider text-gray-300 mb-4">Company</h3>
+        <ul class="space-y-3 text-sm">
+          <li>
+            <a href={base} class="text-gray-400 hover:text-white transition-colors">Home</a>
+          </li>
+          <li>
+            <a href={`${base}about/`} class="text-gray-400 hover:text-white transition-colors">About Us</a>
+          </li>
+          {config.features.blog && (
+            <li>
+              <a href={`${base}blog/`} class="text-gray-400 hover:text-white transition-colors">Blog</a>
+            </li>
+          )}
+          <li>
+            <a href={`${base}templates/`} class="text-gray-400 hover:text-white transition-colors">Templates</a>
+          </li>
+          <li>
+            <a href={`${base}contact/`} class="text-gray-400 hover:text-white transition-colors">Contact</a>
+          </li>
+          {config.features.faq && (
+            <li>
+              <a href={`${base}faq/`} class="text-gray-400 hover:text-white transition-colors">FAQ</a>
+            </li>
+          )}
+          <li>
+            <a href={`${base}privacy/`} class="text-gray-400 hover:text-white transition-colors">Privacy Policy</a>
+          </li>
+          <li>
+            <a href={`${base}terms/`} class="text-gray-400 hover:text-white transition-colors">Terms of Service</a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Contact Info -->
+      <div>
+        <h3 class="text-sm font-bold uppercase tracking-wider text-gray-300 mb-4">Contact Us</h3>
+        <div class="space-y-4 text-sm">
+          <div class="flex items-start gap-3">
+            <svg class="w-5 h-5 text-gray-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+            </svg>
+            <span class="text-gray-400">{config.contact.address}</span>
+          </div>
+          <div class="flex items-center gap-3">
+            <svg class="w-5 h-5 text-gray-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+            </svg>
+            <a href={`tel:${config.contact.phone}`} class="text-gray-400 hover:text-white transition-colors font-medium">
+              {config.contact.phone}
+            </a>
+          </div>
+          <div class="flex items-center gap-3">
+            <svg class="w-5 h-5 text-gray-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+            </svg>
+            <a href={`mailto:${config.contact.email}`} class="text-gray-400 hover:text-white transition-colors">
+              {config.contact.email}
+            </a>
+          </div>
+          <div class="flex items-center gap-3">
+            <svg class="w-5 h-5 text-gray-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <span class="text-gray-400">{config.contact.businessHours}</span>
+          </div>
+        </div>
+
+        <!-- Social Links -->
+        <div class="flex gap-3 mt-6">
+          {config.social.facebook && (
+            <a
+              href={config.social.facebook}
+              class="w-9 h-9 bg-slate-800 rounded-lg flex items-center justify-center text-gray-400 hover:text-white hover:bg-slate-700 transition-all"
+              aria-label="Facebook"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 24 24">
+                <path fill-rule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" clip-rule="evenodd" />
+              </svg>
+            </a>
+          )}
+          {config.social.instagram && (
+            <a
+              href={config.social.instagram}
+              class="w-9 h-9 bg-slate-800 rounded-lg flex items-center justify-center text-gray-400 hover:text-white hover:bg-slate-700 transition-all"
+              aria-label="Instagram"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 24 24">
+                <path fill-rule="evenodd" d="M12.017 0C5.396 0 .029 5.367.029 11.987c0 6.62 5.367 11.987 11.988 11.987s11.987-5.367 11.987-11.987C24.004 5.367 18.637.001 12.017.001zM8.449 16.988c-1.297 0-2.448-.49-3.328-1.297C4.243 14.814 3.5 13.455 3.5 11.987s.743-2.827 1.621-3.704c.88-.807 2.031-1.297 3.328-1.297 1.297 0 2.448.49 3.328 1.297.878.877 1.621 2.236 1.621 3.704s-.743 2.827-1.621 3.704c-.88.807-2.031 1.297-3.328 1.297z" clip-rule="evenodd" />
+              </svg>
+            </a>
+          )}
+          {config.social.linkedin && (
+            <a
+              href={config.social.linkedin}
+              class="w-9 h-9 bg-slate-800 rounded-lg flex items-center justify-center text-gray-400 hover:text-white hover:bg-slate-700 transition-all"
+              aria-label="LinkedIn"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 24 24">
+                <path fill-rule="evenodd" d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" clip-rule="evenodd" />
+              </svg>
+            </a>
+          )}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Service Area Bar -->
+  <div class="border-t border-slate-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+      <div class="text-center">
+        <h3 class="text-xs font-bold uppercase tracking-wider text-gray-500 mb-2">Proudly Serving</h3>
+        <p class="text-sm text-gray-400">
+          Denver | Boulder | Lakewood | Highlands Ranch | Arvada | Golden | Littleton | Aurora | Parker | Castle Rock
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Trust Badges -->
+  <div class="border-t border-slate-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+      <div class="flex flex-wrap items-center justify-center gap-6 md:gap-10">
+        <div class="flex items-center gap-2 text-gray-400">
+          <svg class="w-5 h-5 text-green-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+          <span class="text-xs font-medium">CO Licensed</span>
+        </div>
+        <div class="flex items-center gap-2 text-gray-400">
+          <svg class="w-5 h-5 text-blue-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+          <span class="text-xs font-medium">Fully Insured</span>
+        </div>
+        <div class="flex items-center gap-2 text-gray-400">
+          <svg class="w-5 h-5 text-amber-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+          <span class="text-xs font-medium">4.9/5 Rating</span>
+        </div>
+        <div class="flex items-center gap-2 text-gray-400">
+          <svg class="w-5 h-5 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+          <span class="text-xs font-medium">2-Year Warranty</span>
+        </div>
+        <div class="flex items-center gap-2 text-gray-400">
+          <svg class="w-5 h-5 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+          <span class="text-xs font-medium">Free Estimates</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom Bar -->
+  <div class="border-t border-slate-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col md:flex-row justify-between items-center text-xs text-gray-500">
+      <p>&copy; {currentYear} {config.site.title}. All rights reserved. CO License #GC-2024-XXXXX</p>
+      <div class="flex gap-6 mt-3 md:mt-0">
+        <a href={`${base}privacy/`} class="hover:text-gray-300 transition-colors">Privacy</a>
+        <a href={`${base}terms/`} class="hover:text-gray-300 transition-colors">Terms</a>
+        <a href={`${base}faq/`} class="hover:text-gray-300 transition-colors">FAQ</a>
+      </div>
+    </div>
+  </div>
+</footer>

@@ -1,0 +1,102 @@
+- id: "product-1"
+  name: "Premium Service Package"
+  description: "Our comprehensive premium service package includes everything you need to get started and succeed. Perfect for businesses looking for a complete solution."
+  price: "$299"
+  image: "/assets/products/premium-package.jpg"
+  category: "services"
+  featured: true
+  features:
+    - "Complete setup and configuration"
+    - "24/7 priority support"
+    - "Advanced features and tools"
+    - "Monthly performance reports"
+    - "Dedicated account manager"
+  specifications:
+    duration: "Ongoing"
+    deliverables: "5-10 items"
+    turnaround: "48 hours"
+
+- id: "product-2"
+  name: "Standard Service Package"
+  description: "Our most popular package offers great value with essential features and reliable support. Ideal for small to medium businesses."
+  price: "$149"
+  image: "/assets/products/standard-package.jpg"
+  category: "services"
+  featured: true
+  features:
+    - "Standard setup included"
+    - "Business hours support"
+    - "Core features and tools"
+    - "Weekly progress updates"
+  specifications:
+    duration: "3-6 months"
+    deliverables: "3-5 items"
+    turnaround: "72 hours"
+
+- id: "product-3"
+  name: "Basic Starter Package"
+  description: "Perfect for those just getting started. This package provides the essential tools and support you need at an affordable price."
+  price: "$79"
+  image: "/assets/products/basic-package.jpg"
+  category: "services"
+  featured: false
+  features:
+    - "Quick setup assistance"
+    - "Email support"
+    - "Basic features included"
+    - "Getting started guide"
+  specifications:
+    duration: "1 month"
+    deliverables: "1-2 items"
+    turnaround: "5 business days"
+
+- id: "product-4"
+  name: "Consultation Service"
+  description: "One-on-one consultation to discuss your needs and develop a customized strategy. Great for planning and decision making."
+  price: "$125"
+  image: "/assets/products/consultation.jpg"
+  category: "consulting"
+  featured: false
+  features:
+    - "1-hour dedicated session"
+    - "Personalized recommendations"
+    - "Action plan development"
+    - "Follow-up summary report"
+  specifications:
+    duration: "1 hour"
+    deliverables: "Strategy document"
+    turnaround: "Same day"
+
+- id: "product-5"
+  name: "Custom Solution"
+  description: "Tailored solution designed specifically for your unique requirements. We work with you to create something perfect for your needs."
+  price: "Contact for Quote"
+  image: "/assets/products/custom-solution.jpg"
+  category: "custom"
+  featured: true
+  features:
+    - "Completely customized approach"
+    - "Dedicated project team"
+    - "Flexible timeline"
+    - "Ongoing optimization"
+  specifications:
+    duration: "Variable"
+    deliverables: "Custom scope"
+    turnaround: "As agreed"
+
+- id: "product-6"
+  name: "Add-on Support Package"
+  description: "Additional support and maintenance services to complement your existing package. Keep everything running smoothly."
+  price: "$49/month"
+  image: "/assets/products/support-addon.jpg"
+  category: "support"
+  featured: false
+  features:
+    - "Extended support hours"
+    - "Priority ticket handling"
+    - "Regular system checks"
+    - "Performance monitoring"
+  specifications:
+    duration: "Monthly recurring"
+    deliverables: "Ongoing support"
+    turnaround: "24 hours" 

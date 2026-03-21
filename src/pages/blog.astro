@@ -1,0 +1,134 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { readFileSync } from 'fs';
+import { join } from 'path';
+import yaml from 'js-yaml';
+
+const configPath = join(process.cwd(), 'config.yaml');
+const config = yaml.load(readFileSync(configPath, 'utf8'));
+const base = import.meta.env.BASE_URL;
+
+const articles = [
+  {
+    title: "5 Signs Your Kitchen Needs a Remodel",
+    excerpt: "Outdated appliances, cramped layouts, and worn countertops aren't just eyesores — they can actually decrease your home's value. Here's how to tell when it's time for a kitchen upgrade.",
+    date: "January 15, 2025",
+    category: "Kitchen",
+    readTime: "5 min read"
+  },
+  {
+    title: "How to Budget for a Home Renovation in Colorado",
+    excerpt: "Material costs, labor rates, and permit fees vary across the Front Range. We break down realistic budgets for common renovation projects so you can plan with confidence.",
+    date: "December 8, 2024",
+    category: "Planning",
+    readTime: "7 min read"
+  },
+  {
+    title: "Bathroom Trends That Actually Add Home Value",
+    excerpt: "Not all upgrades are created equal. Learn which bathroom improvements deliver the best ROI and which trendy features might not pay off at resale time.",
+    date: "November 20, 2024",
+    category: "Bathroom",
+    readTime: "4 min read"
+  }
+];
+---
+
+<BaseLayout title={`Blog | ${config.site.title}`} description="Home renovation tips, project planning guides, and construction insights from Summit Pro Builders in Denver, CO.">
+  <Header slot="header" />
+
+  <!-- Hero -->
+  <section class="relative bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800 py-20">
+    <div class="absolute inset-0 opacity-5">
+      <div class="absolute inset-0" style="background-image: url('data:image/svg+xml,%3Csvg width=&quot;60&quot; height=&quot;60&quot; viewBox=&quot;0 0 60 60&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;%3E%3Cg fill=&quot;none&quot; fill-rule=&quot;evenodd&quot;%3E%3Cg fill=&quot;%23ffffff&quot; fill-opacity=&quot;0.15&quot;%3E%3Cpath d=&quot;M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z&quot;/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');"></div>
+    </div>
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <span class="text-amber-400 font-semibold text-sm uppercase tracking-wider">Insights & Guides</span>
+      <h1 class="text-4xl md:text-5xl font-extrabold text-white mt-2 mb-6">
+        The Summit Pro <span class="text-amber-400">Blog</span>
+      </h1>
+      <p class="text-xl text-blue-100 max-w-3xl mx-auto leading-relaxed">
+        Practical advice for Denver homeowners planning their next renovation project.
+      </p>
+    </div>
+  </section>
+
+  <!-- Articles -->
+  <section class="py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <!-- Category Filter -->
+      <div class="flex flex-wrap justify-center gap-2 mb-12 animate-on-scroll">
+        <button class="px-4 py-2 text-sm font-semibold rounded-full bg-blue-600 text-white">All</button>
+        <button class="px-4 py-2 text-sm font-medium rounded-full bg-gray-100 text-gray-600 hover:bg-gray-200 transition-colors">Kitchen</button>
+        <button class="px-4 py-2 text-sm font-medium rounded-full bg-gray-100 text-gray-600 hover:bg-gray-200 transition-colors">Bathroom</button>
+        <button class="px-4 py-2 text-sm font-medium rounded-full bg-gray-100 text-gray-600 hover:bg-gray-200 transition-colors">Planning</button>
+        <button class="px-4 py-2 text-sm font-medium rounded-full bg-gray-100 text-gray-600 hover:bg-gray-200 transition-colors">Outdoor</button>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 stagger-children">
+        {articles.map((article) => (
+          <article class="animate-on-scroll group bg-gray-50 rounded-2xl border border-gray-100 overflow-hidden hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+            <div class="h-48 bg-gradient-to-br from-blue-100 to-blue-200 flex items-center justify-center">
+              <svg class="w-16 h-16 text-blue-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
+              </svg>
+            </div>
+            <div class="p-6">
+              <div class="flex items-center gap-3 mb-3">
+                <span class="text-xs font-semibold uppercase tracking-wider text-blue-600 bg-blue-50 px-2 py-1 rounded">{article.category}</span>
+                <span class="text-xs text-gray-400">{article.readTime}</span>
+              </div>
+              <h2 class="text-xl font-bold text-gray-900 mb-3 group-hover:text-blue-600 transition-colors">{article.title}</h2>
+              <p class="text-gray-600 text-sm leading-relaxed mb-4">{article.excerpt}</p>
+              <div class="flex items-center justify-between pt-4 border-t border-gray-200">
+                <span class="text-xs text-gray-400">{article.date}</span>
+                <span class="text-sm font-semibold text-blue-600 inline-flex items-center">
+                  Read More
+                  <svg class="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                </span>
+              </div>
+            </div>
+          </article>
+        ))}
+      </div>
+
+      <div class="text-center mt-12">
+        <p class="text-gray-500">More articles coming soon. Check back regularly for renovation tips and project inspiration.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Website Services Banner -->
+  <section class="py-12 bg-white">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="animate-on-scroll bg-gradient-to-r from-slate-900 to-blue-900 rounded-2xl p-8 text-center text-white">
+        <p class="text-amber-400 font-semibold text-xs uppercase tracking-wider mb-2">For Contractors & Trades</p>
+        <h3 class="text-xl font-bold mb-2">Need a Website That Brings in Leads?</h3>
+        <p class="text-blue-200 text-sm mb-4">This entire site was built with our templates. Get yours starting at $497 — no monthly fees.</p>
+        <a href={`${base}templates/`} class="inline-flex items-center bg-amber-500 text-slate-900 px-6 py-3 rounded-lg font-bold text-sm hover:bg-amber-400 transition-colors">
+          See Plans & Pricing
+          <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Newsletter CTA -->
+  <section class="py-16 bg-gray-50">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center animate-on-scroll">
+      <div class="bg-white rounded-2xl border border-gray-200 p-8 md:p-12 shadow-sm">
+        <svg class="w-10 h-10 text-blue-600 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+        <h2 class="text-2xl font-bold text-gray-900 mb-2">Get Renovation Tips in Your Inbox</h2>
+        <p class="text-gray-600 mb-6">Join 500+ Denver homeowners who get our monthly newsletter with project ideas, budgeting tips, and seasonal maintenance reminders.</p>
+        <div class="flex flex-col sm:flex-row gap-3 justify-center max-w-md mx-auto">
+          <input type="email" placeholder="Enter your email" class="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
+          <button class="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors whitespace-nowrap">Subscribe</button>
+        </div>
+        <p class="text-xs text-gray-400 mt-3">No spam. Unsubscribe anytime.</p>
+      </div>
+    </div>
+  </section>
+
+  <Footer slot="footer" />
+</BaseLayout>
