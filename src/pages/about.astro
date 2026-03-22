@@ -15,18 +15,24 @@ const base = import.meta.env.BASE_URL;
   <!-- HERO -->
   <section
     class="relative pt-36 pb-20 flex flex-col justify-end overflow-hidden"
-    style="background: linear-gradient(160deg, #0F2027 0%, #1a3240 40%, #1E3D4F 70%, #2D4A3E 100%); min-height: 50vh;"
+    style="min-height: 60vh;"
   >
-    <div class="absolute inset-0 pointer-events-none" style="opacity: 0.07;" aria-hidden="true">
-      <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
-        <defs>
-          <pattern id="about-waves" x="0" y="0" width="200" height="60" patternUnits="userSpaceOnUse">
-            <path d="M0 30 Q25 20 50 30 Q75 40 100 30 Q125 20 150 30 Q175 40 200 30" stroke="rgba(196,145,58,0.7)" stroke-width="0.8" fill="none"/>
-          </pattern>
-        </defs>
-        <rect width="100%" height="100%" fill="url(#about-waves)"/>
-      </svg>
+    <!-- Hero photo background -->
+    <div class="absolute inset-0" aria-hidden="true">
+      <img
+        src={`${base}assets/image5.jpeg`}
+        alt=""
+        class="w-full h-full object-cover"
+        style="object-position: 50% 35%;"
+        fetchpriority="high"
+      />
     </div>
+    <!-- Gradient overlay — bottom-heavy to protect text -->
+    <div
+      class="absolute inset-0"
+      aria-hidden="true"
+      style="background: linear-gradient(to bottom, rgba(15,32,39,0.30) 0%, rgba(15,32,39,0.45) 50%, rgba(15,32,39,0.82) 100%);"
+    ></div>
     <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <!-- Breadcrumb -->
       <nav class="mb-6" aria-label="Breadcrumb">
@@ -54,26 +60,16 @@ const base = import.meta.env.BASE_URL;
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-start">
 
-        <!-- Left: Portrait placeholder -->
+        <!-- Left: Portrait photo -->
         <div class="lg:sticky lg:top-24">
-          <div
-            class="rounded-2xl overflow-hidden flex items-end"
-            style="background: linear-gradient(160deg, #1E3D4F 0%, #2D4A3E 60%, #4A3728 100%); min-height: 480px; position: relative;"
-          >
-            <div class="absolute inset-0" style="opacity: 0.12;" aria-hidden="true">
-              <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
-                <defs>
-                  <pattern id="portrait-waves" x="0" y="0" width="120" height="40" patternUnits="userSpaceOnUse">
-                    <path d="M0 20 Q30 10 60 20 Q90 30 120 20" stroke="#C4913A" stroke-width="1" fill="none"/>
-                  </pattern>
-                </defs>
-                <rect width="100%" height="100%" fill="url(#portrait-waves)"/>
-              </svg>
-            </div>
-            <div class="relative z-10 p-8">
-              <p class="text-xs uppercase tracking-widest mb-1" style="color: var(--color-gold); letter-spacing: 0.15em; opacity: 0.7;">Portrait</p>
-              <p class="text-sm" style="color: rgba(250,247,240,0.35);">Photo to be added</p>
-            </div>
+          <div class="rounded-2xl overflow-hidden" style="aspect-ratio: 3/4; max-height: 560px;">
+            <img
+              src={`${base}assets/image0.jpeg`}
+              alt="Black and white portrait of Bobbi Rose resting her chin on a carved wooden paddle with a caribou motif, wearing a beaded headband and earrings"
+              class="w-full h-full object-cover"
+              style="object-position: 50% 15%;"
+              loading="lazy"
+            />
           </div>
         </div>
 
@@ -102,7 +98,8 @@ const base = import.meta.env.BASE_URL;
     style="background-color: var(--color-land);"
   >
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="max-w-3xl">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-start">
+      <div>
         <p class="text-xs font-semibold uppercase tracking-widest mb-4" style="color: var(--color-gold); letter-spacing: 0.15em;">On the Land</p>
         <h2
           class="text-3xl sm:text-4xl lg:text-5xl font-light text-white mb-8 leading-tight"
@@ -141,6 +138,21 @@ const base = import.meta.env.BASE_URL;
             Nahanni Guide Profile ↗
           </a>
         </div>
+      </div>
+
+      <!-- Right: On the land photo -->
+      <div class="lg:sticky lg:top-24">
+        <div class="rounded-2xl overflow-hidden" style="aspect-ratio: 3/4; max-height: 560px;">
+          <img
+            src={`${base}assets/image2.jpeg`}
+            alt="Bobbi Rose among tall green riverside vegetation at a camp on the water"
+            class="w-full h-full object-cover"
+            style="object-position: 50% 30%;"
+            loading="lazy"
+          />
+        </div>
+      </div>
+
       </div>
     </div>
   </section>
@@ -231,7 +243,8 @@ const base = import.meta.env.BASE_URL;
     style="background: linear-gradient(160deg, #1A1614 0%, #2D2218 60%, #1E3D4F 100%);"
   >
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="max-w-3xl">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+      <div class="max-w-xl">
         <p class="text-xs font-semibold uppercase tracking-widest mb-4" style="color: var(--color-gold); letter-spacing: 0.15em;">Creative Practice</p>
         <h2
           class="text-3xl sm:text-4xl lg:text-5xl font-light text-white mb-8 leading-tight"
@@ -250,6 +263,21 @@ const base = import.meta.env.BASE_URL;
             This is not a contradiction. It is exactly the point.
           </p>
         </div>
+      </div>
+
+      <!-- Right: Creative practice photo -->
+      <div>
+        <div class="rounded-2xl overflow-hidden" style="aspect-ratio: 3/4; max-height: 520px;">
+          <img
+            src={`${base}assets/image6.jpeg`}
+            alt="Bobbi Rose kneeling in the snow wearing beaded floral mukluks, mountains and clear sky behind her"
+            class="w-full h-full object-cover"
+            style="object-position: 50% 20%;"
+            loading="lazy"
+          />
+        </div>
+      </div>
+
       </div>
     </div>
   </section>
